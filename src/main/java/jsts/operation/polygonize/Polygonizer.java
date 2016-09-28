@@ -15,7 +15,7 @@
  * License for the specific language governing rights and limitations under the
  * License.
  */
-package jsts.polygonize;
+package jsts.operation.polygonize;
 
 import java.util.Collection;
 
