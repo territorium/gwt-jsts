@@ -17,6 +17,7 @@
  */
 package jsts.geom;
 
+import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsType;
 
 /**
@@ -40,14 +41,20 @@ import jsinterop.annotations.JsType;
 @JsType(name = "Polygon", namespace = "jsts.geom", isNative = true)
 public class Polygon extends Geometry {
 
+	@JsConstructor
+	public Polygon(LinearRing shell, LinearRing[] holes, GeometryFactory factory) {
+		super(factory);
+	}
+
+	public native boolean isRectangle();
+
 	/**
 	 * 
-	 * get the interior ring at position n
+	 * get exterior ring
 	 *
-	 * @param i
 	 * @return
 	 */
-	public native LineString getInteriorRingN(int i);
+	public native LineString getExteriorRing();
 
 	/**
 	 * 
@@ -59,10 +66,15 @@ public class Polygon extends Geometry {
 
 	/**
 	 * 
-	 * get exterior ring
+	 * get the interior ring at position n
 	 *
+	 * @param i
 	 * @return
 	 */
-	public native LineString getExteriorRing();
+	public native LineString getInteriorRingN(int i);
+
+	public native double getArea();
+
+	public native double getLength();
 
 }

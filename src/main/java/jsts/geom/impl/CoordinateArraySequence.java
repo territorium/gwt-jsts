@@ -15,14 +15,15 @@
  * License for the specific language governing rights and limitations under the
  * License.
  */
-package jsts;
+package jsts.geom.impl;
 
-import com.google.gwt.core.client.EntryPoint;
+import jsts.geom.Coordinate;
+import jsts.geom.CoordinateSequence;
 
 /**
  *
  * <p>
- * The <code>GwtJSTS</code> class is the {@link EntryPoint} for
+ * The <code>CoordinateArraySequence</code> class
  * </p>
  * <p>
  * Copyright: 2003 - 2016 <a href="http://www.teritoriumonline.com">Territorium
@@ -34,14 +35,29 @@ import com.google.gwt.core.client.EntryPoint;
  * <p>
  * </p>
  * @author <a href="mailto:mapaccel@teritoriumonline.com">Peter Zanetti</a>.
- * @version 1.0.0,24.11.2016
- * @since 1.0.0
+ * @version 4.0.0,25.11.2016
+ * @since 4.0.0
  */
-public class GwtJSTS implements EntryPoint {
+public class CoordinateArraySequence implements CoordinateSequence {
 
-	@Override
-	public void onModuleLoad() {
-		JSApiLoader.load();
+	public CoordinateArraySequence(Coordinate[] coordinates) {}
+
+	public CoordinateArraySequence(Coordinate[] coordinates, int dimension) {
+
 	}
+
+	public CoordinateArraySequence(CoordinateSequence coordSeq) {
+
+	}
+
+	public CoordinateArraySequence(int size) {
+
+	}
+
+	public CoordinateArraySequence(int size, int dimension) {
+
+	}
+
+	public native Coordinate[] toCoordinateArray();
 
 }

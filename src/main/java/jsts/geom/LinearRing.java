@@ -15,14 +15,22 @@
  * License for the specific language governing rights and limitations under the
  * License.
  */
-package jsts;
+package jsts.geom;
 
-import jsts.io.OL3Parser;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsType;
 
 /**
  *
  * <p>
- * The <code>OL3ParserTest</code> class
+ * Models an OGC SFS LinearRing. A LinearRing is a LineString which is both
+ * closed and simple. In other words, the first and last coordinate in the ring
+ * must be equal, and the interior of the ring must not self-intersect. Either
+ * orientation of the ring is allowed.
+ * 
+ * A ring must have either 0 or 4 or more points. The first and last points must
+ * be equal (in 2D). If these conditions are not met, the constructors throw an
+ * IllegalArgumentException
  * </p>
  * <p>
  * Copyright: 2003 - 2016 <a href="http://www.teritoriumonline.com">Territorium
@@ -34,22 +42,15 @@ import jsts.io.OL3Parser;
  * <p>
  * </p>
  * @author <a href="mailto:mapaccel@teritoriumonline.com">Peter Zanetti</a>.
- * @version 4.0.0,24.11.2016
+ * @version 4.0.0,25.11.2016
  * @since 4.0.0
  */
-public class OL3ParserTest extends GwtJSTSBaseTestCase {
+@JsType(name = "LinearRing", namespace = "jsts.geom", isNative = true)
+public class LinearRing extends LineString {
 
-	public void testReadGeometry() {
-		injectUrlAndTest(new TestWithInjection() {
-
-			@Override
-			public void test() {
-
-				OL3Parser parser = new OL3Parser();
-				assertNotNull(parser);
-			}
-
-		});
+	@JsConstructor
+	public LinearRing(CoordinateSequence points, GeometryFactory factory) {
+		super(points, factory);
 	}
 
 }

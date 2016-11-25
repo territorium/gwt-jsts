@@ -38,4 +38,11 @@ import jsinterop.annotations.JsType;
 @JsType(name = "CoordinateSequence", namespace = "jsts.geom", isNative = true)
 public interface CoordinateSequence {
 
+	// @JsProperty()
+	// public native int X;
+	// static final int Y = 1;
+	// static final int M = 2;
+	// static final int Z = 3;
+
+	public Coordinate[] toCoordinateArray();
 }

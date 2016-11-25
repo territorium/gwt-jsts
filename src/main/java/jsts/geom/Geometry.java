@@ -17,6 +17,7 @@
  */
 package jsts.geom;
 
+import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
@@ -26,10 +27,24 @@ import jsinterop.annotations.JsType;
  * 
  */
 @JsType(name = "Geometry", namespace = "jsts.geom", isNative = true)
-public class Geometry {
+public abstract class Geometry {
 
 	@JsProperty(name = "CLASS_NAME")
-	public String CLASS_NAME;
+	public String							CLASS_NAME;
+
+	@JsProperty(name = "envelope")
+	protected Envelope				envelope;
+
+	@JsProperty(name = "factory")
+	protected GeometryFactory	factory;
+
+	/**
+	 * Constructs a(n) {@link Geometry} object.
+	 *
+	 * @param factory
+	 */
+	@JsConstructor
+	public Geometry(GeometryFactory factory) {}
 
 	/**
 	 * 
@@ -66,15 +81,6 @@ public class Geometry {
 
 	/**
 	 * 
-	 * Creates and returns a full copy of this Geometry object (including all
-	 * coordinates contained by it).
-	 * 
-	 * @return
-	 */
-	public native Geometry clone();
-
-	/**
-	 * 
 	 * Returns whether this Geometry is greater than, equal to, or less than
 	 * another Geometry.
 	 *
@@ -82,6 +88,23 @@ public class Geometry {
 	 * @return
 	 */
 	public native int compareTo(Object o);
+
+	public native boolean contains(Geometry g);
+
+	/**
+	 * 
+	 * Creates and returns a full copy of this Geometry object (including all
+	 * coordinates contained by it).
+	 * 
+	 * @return
+	 */
+	public native Geometry copy();
+
+	public native boolean coveredBy(Geometry g);
+
+	public native boolean covers(Geometry g);
+
+	public native boolean crosses(Geometry g);
 
 	/**
 	 * 
@@ -93,6 +116,8 @@ public class Geometry {
 	 */
 	public native Geometry difference(Geometry geom);
 
+	public native boolean disjoint(Geometry g);
+
 	/**
 	 * 
 	 * Tests whether this geometry is topologically equal to the argument
@@ -102,6 +127,12 @@ public class Geometry {
 	 * @return
 	 */
 	public native boolean equals(Geometry geom);
+
+	public native boolean equalsExact(Geometry other);
+
+	public native boolean equalsExact(Geometry other, double tolerance);
+
+	public native boolean equalsNorm(Geometry g);
 
 	/**
 	 * 
@@ -113,6 +144,8 @@ public class Geometry {
 	 */
 	public native boolean equalsTopo(Geometry geom);
 
+	public native void geometryChanged();
+
 	/**
 	 * 
 	 * Returns the boundary, or an empty geometry of appropriate dimension if this
@@ -121,6 +154,8 @@ public class Geometry {
 	 * @return
 	 */
 	public native Geometry getBoundary();
+
+	public native int getBoundaryDimension();
 
 	/**
 	 * 
@@ -140,6 +175,12 @@ public class Geometry {
 	 */
 	public native Coordinate[] getCoordinates();
 
+	public native Geometry getEnvelope();
+
+	public native Envelope getEnvelopeInternal();
+
+	public native GeometryFactory getFactory();
+
 	/**
 	 * 
 	 * Returns an element Geometry from a GeometryCollection (or this, if the
@@ -150,6 +191,8 @@ public class Geometry {
 	 */
 	public native Geometry getGeometryN(int n);
 
+	public native String getGeometryType();
+
 	/**
 	 * 
 	 * Returns the number of Geometrys in a GeometryCollection (or 1, if the
@@ -158,6 +201,12 @@ public class Geometry {
 	 * @return
 	 */
 	public native int getNumGeometries();
+
+	public native int getSortIndex();
+
+	public native int getSRID();
+
+	public native Object getUserData();
 
 	/**
 	 * 
@@ -186,6 +235,18 @@ public class Geometry {
 	 */
 	public native boolean isEmpty();
 
+	protected native boolean isEquivalentClass(Geometry other);
+
+	/**
+	 * Tests whether this is an instance of a general GeometryCollection, rather
+	 * than a homogeneous subclass.
+	 *
+	 * @return true if this is a hetereogeneous GeometryCollection
+	 */
+	public native boolean isGeometryCollection();
+
+	public native boolean isGeometryCollectionOrDerived();
+
 	/**
 	 * 
 	 * Tests whether this Geometry is topologically valid, according to the OGC
@@ -194,6 +255,37 @@ public class Geometry {
 	 * @return
 	 */
 	public native boolean isValid();
+
+	public native boolean overlaps(Geometry g);
+
+	public native IntersectionMatrix relate(Geometry g);
+
+	/**
+	 * <p>
+	 * Tests whether the elements in the DE-9IM IntersectionMatrix for the two
+	 * Geometrys match the elements in intersectionPattern. The pattern is a
+	 * 9-character string, with symbols drawn from the following set:
+	 * 
+	 * <pre>
+	 *   0 (dimension 0)
+	 *   1 (dimension 1)
+	 *   2 (dimension 2)
+	 *   T ( matches 0, 1 or 2)
+	 *   F ( matches FALSE)
+	 *   * ( matches any value)
+	 * </pre>
+	 * 
+	 * For more information on the DE-9IM, see the OpenGIS Simple Features
+	 * Specification.
+	 * </p>
+	 *
+	 * @param g
+	 * @param intersectionPattern
+	 * @return
+	 */
+	public native boolean relate(Geometry g, String intersectionPattern);
+
+	public native void setSRID(int SRID);
 
 	/**
 	 * 
@@ -213,5 +305,7 @@ public class Geometry {
 	 * @return
 	 */
 	public native Geometry union(Geometry geom);
+
+	public native boolean within(Geometry g);
 
 }

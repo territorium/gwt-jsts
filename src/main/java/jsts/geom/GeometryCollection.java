@@ -17,6 +17,7 @@
  */
 package jsts.geom;
 
+import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsType;
 
 /**
@@ -25,23 +26,14 @@ import jsinterop.annotations.JsType;
 @JsType(name = "GeometryCollection", namespace = "jsts.geom", isNative = true)
 public class GeometryCollection extends Geometry {
 
-	// /**
-	// *
-	// * Returns an element Geometry from a GeometryCollection (or this, if the
-	// * geometry is not a collection).
-	// *
-	// * @param n
-	// * @return
-	// */
-	// public native Geometry getGeometryN(int n);
-	//
-	// /**
-	// *
-	// * Returns the number of Geometrys in a GeometryCollection (or 1, if the
-	// * geometry is not a collection).
-	// *
-	// * @return
-	// */
-	// public native int getNumGeometries();
+	/**
+	 * Constructs a(n) {@link GeometryCollection} object.
+	 *
+	 * @param factory
+	 */
+	@JsConstructor
+	public GeometryCollection(GeometryFactory factory) {
+		super(factory);
+	}
 
 }
