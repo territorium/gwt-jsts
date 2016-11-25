@@ -18,6 +18,7 @@
 package jsts.geom;
 
 import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
 /**
@@ -58,6 +59,23 @@ import jsinterop.annotations.JsType;
 @JsType(name = "PrecisionModel", namespace = "jsts.geom", isNative = true)
 public class PrecisionModel {
 
+	@JsProperty(name = "FIXED")
+	public static Type	FIXED;
+
+	@JsProperty(name = "FLOATING")
+	public static Type	FLOATING;
+
+	@JsProperty(name = "FLOATING_SINGLE")
+	public static Type	FLOATING_SINGLE;
+
+	/**
+	 * Constructs a(n) {@link PrecisionModel} Creates a PrecisionModel with a
+	 * default precision of FLOATING..
+	 *
+	 */
+	@JsConstructor
+	public PrecisionModel() {}
+
 	/**
 	 * 
 	 * Creates a PrecisionModel that specifies Fixed precision.
@@ -67,4 +85,21 @@ public class PrecisionModel {
 	@JsConstructor
 	public PrecisionModel(double scale) {}
 
+	/**
+	 * Constructs a(n) {@link PrecisionModel} that specifies an explicit precision
+	 * model type.
+	 *
+	 * @param modelType
+	 */
+	@JsConstructor
+	public PrecisionModel(Type modelType) {}
+
+	/**
+	 * Returns the scale factor used to specify a fixed precision model.
+	 *
+	 * @return the scale factor for the fixed precision model
+	 */
+	public native double getScale();
+
+	public native double setScale(double scale);
 }

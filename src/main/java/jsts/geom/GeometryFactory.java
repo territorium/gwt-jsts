@@ -17,6 +17,8 @@
  */
 package jsts.geom;
 
+import java.util.Collection;
+
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsType;
 
@@ -49,32 +51,65 @@ public class GeometryFactory {
 	@JsConstructor
 	public GeometryFactory(PrecisionModel precisionModel) {};
 
-	/**
-	 * 
-	 * Constructs a Polygon with the given exterior boundary.
-	 *
-	 * @param coordinates
-	 * @return
-	 */
+	@JsConstructor
+	public GeometryFactory(CoordinateSequenceFactory coordinateSequenceFactory) {};
+
+	public native Geometry buildGeometry(Collection geomList);
+
+	public native Geometry createGeometry(Geometry g);
+
+	public native GeometryCollection createGeometryCollection();
+
+	public native GeometryCollection createGeometryCollection(Geometry[] geometries);
+
+	public native LinearRing createLinearRing();
+
+	public native LinearRing createLinearRing(Coordinate[] coordinates);
+
+	public native LinearRing createLinearRing(CoordinateSequence invertOrientation);
+
+	public native LineString createLineString();
+
+	public native LineString createLineString(Coordinate[] coordinates);
+
+	public native LineString createLineString(CoordinateSequence coordinates);
+
+	public native MultiLineString createMultiLineString();
+
+	public native MultiLineString createMultiLineString(LineString[] lineStrings);
+
+	public native MultiPoint createMultiPoint();
+
+	public native MultiPoint createMultiPoint(CoordinateSequence coordinates);
+
+	public native MultiPoint createMultiPoint(Point[] point);
+
+	public native MultiPoint createMultiPointFromCoords(Coordinate[] coordinates);
+
+	public native MultiPolygon createMultiPolygon();
+
+	public native MultiPolygon createMultiPolygon(Polygon[] polygons);
+
+	public native Point createPoint();
+
+	public native Point createPoint(Coordinate coordinate);
+
+	public native Polygon createPolygon();
+
 	public native Polygon createPolygon(Coordinate[] coordinates);
 
-	/**
-	 * 
-	 * Constructs a Polygon with the given exterior boundary.
-	 *
-	 * @param coordinates
-	 * @return
-	 */
 	public native Polygon createPolygon(CoordinateSequence coordinates);
 
-	/**
-	 * 
-	 * Creates a GeometryCollection using the given Geometries; a null or empty
-	 * array will create an empty GeometryCollection.
-	 *
-	 * @param geometries
-	 * @return
-	 */
-	public native GeometryCollection createGeometryCollection(Geometry[] geometries);
+	public native Polygon createPolygon(LinearRing shell);
+
+	public native Polygon createPolygon(LinearRing shell, LinearRing[] holes);
+
+	public native CoordinateSequenceFactory getCoordinateSequenceFactory();
+
+	public native PrecisionModel getPrecisionModel();
+
+	public native int getSRID();
+
+	public native Geometry toGeometry(Envelope envelope);
 
 }

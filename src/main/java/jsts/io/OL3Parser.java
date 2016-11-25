@@ -20,6 +20,15 @@ package jsts.io;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsType;
 import jsts.geom.Geometry;
+import jsts.geom.GeometryCollection;
+import jsts.geom.GeometryFactory;
+import jsts.geom.LineString;
+import jsts.geom.LinearRing;
+import jsts.geom.MultiLineString;
+import jsts.geom.MultiPoint;
+import jsts.geom.MultiPolygon;
+import jsts.geom.Point;
+import jsts.geom.Polygon;
 
 /**
  * OpenLayers 3 Geometry parser and writer
@@ -35,8 +44,20 @@ public class OL3Parser {
 	@JsConstructor
 	public OL3Parser() {};
 
+	@JsConstructor
+	public OL3Parser(GeometryFactory factory) {};
+
 	/**
-	 * 
+	 *
+	 * converts a jts geometry into a openlayer geometry
+	 *
+	 * @param geom
+	 * @return
+	 */
+	public native ol.geom.Geometry write(Geometry geom);
+
+	/**
+	 *
 	 * converts a openlayer geometry into a jts geometry
 	 *
 	 * @param geom
@@ -44,13 +65,20 @@ public class OL3Parser {
 	 */
 	public native Geometry read(ol.geom.Geometry geom);
 
-	/**
-	 * 
-	 * converts a jts geometry into a openlayer geometry
-	 *
-	 * @param geom
-	 * @return
-	 */
-	public native ol.geom.Geometry write(Geometry geom);
+	public native Point convertFromPoint(ol.geom.Point point);
+
+	public native LineString convertFromLineString(ol.geom.LineString lineString);
+
+	public native LinearRing convertFromLinearRing(ol.geom.LinearRing linearRing);
+
+	public native Polygon convertFromPolygon(ol.geom.Polygon polygon);
+
+	public native MultiPoint convertFromMultiPoint(ol.geom.MultiPoint multiPoint);
+
+	public native MultiLineString convertFromMultiLineString(ol.geom.MultiLineString multiLineString);
+
+	public native MultiPolygon convertFromMultiPolygon(ol.geom.MultiPolygon multiPolygon);
+
+	public native GeometryCollection convertFromCollection(ol.geom.GeometryCollection geometryCollection);
 
 }

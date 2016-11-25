@@ -17,8 +17,6 @@
  */
 package jsts.geom;
 
-import jsinterop.annotations.JsType;
-
 /**
  * The internal representation of a list of coordinates inside a Geometry. This
  * allows Geometries to store their points using something other than the JTS
@@ -35,7 +33,16 @@ import jsinterop.annotations.JsType;
  * 
  * For an example, see the code for ExtendedCoordinateExample.
  */
-@JsType(name = "CoordinateSequence", namespace = "jsts.geom", isNative = true)
+// @JsType(name = "CoordinateSequence", namespace = "jsts.geom", isNative =
+// true)
 public interface CoordinateSequence {
 
+	// @JsProperty()
+	// public native int X;
+	// static final int Y = 1;
+	// static final int M = 2;
+	// static final int Z = 3;
+
+	@SuppressWarnings("unusable-by-js")
+	Coordinate[] toCoordinateArray();
 }

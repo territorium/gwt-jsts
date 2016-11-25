@@ -17,8 +17,10 @@
  */
 package jsts.io;
 
+import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsType;
 import jsts.geom.Geometry;
+import jsts.geom.GeometryFactory;
 
 /**
  * Writes the Well-Known Text representation of a Geometry. The Well-Known Text
@@ -35,6 +37,14 @@ import jsts.geom.Geometry;
  */
 @JsType(name = "WKTWriter", namespace = "jsts.io", isNative = true)
 public class WKTWriter {
+
+	@JsConstructor
+	public WKTWriter() {
+
+	}
+
+	@JsConstructor
+	public WKTWriter(GeometryFactory geometryFactory) {}
 
 	/**
 	 * 

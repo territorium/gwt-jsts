@@ -1,12 +1,12 @@
 /*
  * Copyright (c) 2001-2016 Territorium Online Srl. All Rights Reserved.
- *
+ * 
  * This file contains Original Code and/or Modifications of Original Code as
  * defined in and that are subject to the Territorium Online License Version
  * 1.0. You may not use this file except in compliance with the License. Please
  * obtain a copy of the License at http://www.tol.info/license/ and read it
  * before using this file.
- *
+ * 
  * The Original Code and all software distributed under the License are
  * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS
  * OR IMPLIED, AND TERRITORIUM ONLINE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
@@ -17,31 +17,42 @@
  */
 package jsts.geom;
 
+import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsType;
-import jsts.geom.Geometry;
 
 /**
- * Writes the Well-Known Text representation of a Geometry. The Well-Known Text
- * format is defined in the OGC Simple Features Specification for SQL. See
- * WKTReader for a formal specification of the format syntax. The WKTWriter
- * outputs coordinates rounded to the precision model. Only the maximum number
- * of decimal places necessary to represent the ordinates to the required
- * precision will be output.
- * 
- * The SFS WKT spec does not define a special tag for LinearRings. Under the
- * spec, rings are output as LINESTRINGs. In order to allow precisely specifying
- * constructed geometries, JTS also supports a non-standard LINEARRING tag which
- * is used to output LinearRings.
+ *
+ * <p>
+ * The <code>IntersectionMatrix</code> class
+ * </p>
+ * <p>
+ * Copyright: 2003 - 2016 <a href="http://www.teritoriumonline.com">Territorium
+ * Online Srl.</a>
+ * </p>
+ * <p>
+ * Via Buozzi 12, 39100 Bolzano, Italy.
+ * </p>
+ * <p>
+ * </p>
+ * @author <a href="mailto:mapaccel@teritoriumonline.com">Peter Zanetti</a>.
+ * @version 4.0.0,25.11.2016
+ * @since 4.0.0
  */
-@JsType(name = "WKTWriter", namespace = "jsts.io", isNative = true)
-public class WKTWriter {
+
+@JsType(name = "IntersectionMatrix", namespace = "jsts.geom", isNative = true)
+public class IntersectionMatrix {
 
 	/**
-	 * 
-	 * Converts a Geometry to its Well-known Text representation.
+	 * Constructs a(n) {@link IntersectionMatrix} object.
 	 *
-	 * @param geometry
-	 * @return
 	 */
-	public native String write(Geometry geometry);
+	@JsConstructor
+	public IntersectionMatrix() {}
+
+	@JsConstructor
+	public IntersectionMatrix(IntersectionMatrix other) {}
+
+	@JsConstructor
+	public IntersectionMatrix(String elements) {}
+
 }

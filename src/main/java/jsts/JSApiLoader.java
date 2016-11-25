@@ -19,12 +19,13 @@ package jsts;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.ScriptInjector;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.TextResource;
 
 /**
  *
  * <p>
  * The <code>JSApiLoader</code> class is used to inject the JSTS JavaScript file
- * (jsts.min.js)
  * </p>
  * <p>
  * Copyright: 2003 - 2016 <a href="http://www.teritoriumonline.com">Territorium
@@ -36,36 +37,59 @@ import com.google.gwt.core.client.ScriptInjector;
  * <p>
  * </p>
  * @author <a href="mailto:mapaccel@teritoriumonline.com">Peter Zanetti</a>.
- * @version 4.0.0,24.11.2016
- * @since 4.0.0
+ * @version 1.0.0,24.11.2016
+ * @since 1.0.0
  */
 public abstract class JSApiLoader {
 
-	private static Impl impl;
+	private static JsResources	res;
+	private static boolean			loading	= false;
 
-	public static JSApiLoader get() {
-		if (impl == null) {
-			impl = new Impl();
+	private static JsResources get() {
+		if (res == null) {
+			res = GWT.create(JsResources.class);
 		}
-		return impl;
+		return res;
 	}
 
-	public abstract void load();
-
-
-	private static final class Impl extends JSApiLoader {
-
-		final String						scriptUrl	= GWT.getModuleBaseForStaticFiles() + "jsts.min-1.3.0.js";
-
-		private static boolean	loading		= false;
-
-		@Override
-		public void load() {
-			if (!loading) {
-				// Start loading the library.
-				loading = true;
-				ScriptInjector.fromString(scriptUrl).setRemoveTag(false).setWindow(ScriptInjector.TOP_WINDOW).inject();
-			}
+	/**
+	 * <p>
+	 * Injects the JavaScript libraries needed
+	 * </p>
+	 *
+	 */
+	public static void load() {
+		if (!loading) {
+			// Start loading the library.
+			loading = true;
+			ScriptInjector.fromString(get().jsts().getText()).setWindow(ScriptInjector.TOP_WINDOW).inject();
 		}
 	}
+
+
+	/**
+	 *
+	 * <p>
+	 * The <code>JsResources</code> interface is used to define the JavaScript
+	 * files as {@link TextResource}'s
+	 * </p>
+	 * <p>
+	 * Copyright: 2003 - 2016
+	 * <a href="http://www.teritoriumonline.com">Territorium Online Srl.</a>
+	 * </p>
+	 * <p>
+	 * Via Buozzi 12, 39100 Bolzano, Italy.
+	 * </p>
+	 * <p>
+	 * </p>
+	 * @author <a href="mailto:mapaccel@teritoriumonline.com">Peter Zanetti</a>.
+	 * @version 1.0.0,25.11.2016
+	 * @since 1.0.0
+	 */
+	public interface JsResources extends ClientBundle {
+
+		@Source("jsts.min-1.3.0.js")
+		TextResource jsts();
+	}
+
 }

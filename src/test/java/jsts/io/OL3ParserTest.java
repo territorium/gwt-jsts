@@ -15,14 +15,20 @@
  * License for the specific language governing rights and limitations under the
  * License.
  */
-package jsts;
+package jsts.io;
 
-import com.google.gwt.core.client.EntryPoint;
+import org.junit.Test;
+
+import jsts.GwtJSTSTestCase;
+import jsts.geom.Coordinate;
+import jsts.geom.GeometryFactory;
+import jsts.geom.Polygon;
+import jsts.geom.PrecisionModel;
 
 /**
  *
  * <p>
- * The <code>GwtJSTS</code> class is the {@link EntryPoint} for
+ * The <code>OL3ParserTest</code> class
  * </p>
  * <p>
  * Copyright: 2003 - 2016 <a href="http://www.teritoriumonline.com">Territorium
@@ -37,11 +43,27 @@ import com.google.gwt.core.client.EntryPoint;
  * @version 1.0.0,24.11.2016
  * @since 1.0.0
  */
-public class GwtJSTS implements EntryPoint {
+public class OL3ParserTest extends GwtJSTSTestCase {
 
-	@Override
-	public void onModuleLoad() {
-		JSApiLoader.load();
+	@Test
+	public void testReadGeometry() {
+		OL3Parser parser = new OL3Parser();
+		assertNotNull(parser);
+
+		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel());
+		assertNotNull(geometryFactory);
+
+		Coordinate coordinates[] = new Coordinate[5];
+		coordinates[0] = new Coordinate(673265.5071993746, 5149915.308173436);
+		coordinates[1] = new Coordinate(677659.9646521873, 5151922.225750311);
+		coordinates[2] = new Coordinate(675134.0166674997, 5146247.493291561);
+		coordinates[3] = new Coordinate(675134.0166674997, 5146247.493291561);
+		coordinates[4] = new Coordinate(673265.5071993746, 5149915.308173436);
+		Polygon jtsGeom = geometryFactory.createPolygon(coordinates);
+		assertNotNull(jtsGeom);
+
+		ol.geom.Geometry olGeom = parser.write(jtsGeom);
+		assertNotNull(olGeom);
 	}
 
 }
