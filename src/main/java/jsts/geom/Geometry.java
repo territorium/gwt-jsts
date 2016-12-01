@@ -18,7 +18,6 @@
 package jsts.geom;
 
 import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
 /**
@@ -26,17 +25,8 @@ import jsinterop.annotations.JsType;
  * geometry.
  * 
  */
-@JsType(name = "Geometry", namespace = "jsts.geom", isNative = true)
+@JsType(isNative = true)
 public abstract class Geometry {
-
-	@JsProperty(name = "CLASS_NAME")
-	public String							CLASS_NAME;
-
-	@JsProperty(name = "envelope")
-	protected Envelope				envelope;
-
-	@JsProperty(name = "factory")
-	protected GeometryFactory	factory;
 
 	/**
 	 * Constructs a(n) {@link Geometry} object.

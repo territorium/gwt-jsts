@@ -47,7 +47,7 @@ public class Ol3GeometryUtilTest extends GwtJSTSTestCase {
 
 	@Test
 	public void testReadWKTPolygon() {
-		Geometry geometry = Ol3GeometryUtil.readWKT(POLYGON);
+		Geometry geometry = GeometryUtil.fromWKT(POLYGON);
 		assertNotNull(geometry);
 	}
 }

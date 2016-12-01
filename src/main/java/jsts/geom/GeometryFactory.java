@@ -29,7 +29,7 @@ import jsinterop.annotations.JsType;
  * supplied PrecisionModel. It is assumed that input Coordinates meet the given
  * precision.
  */
-@JsType(name = "GeometryFactory", namespace = "jsts.geom", isNative = true)
+@JsType(isNative = true)
 public class GeometryFactory {
 
 	/**
@@ -51,10 +51,11 @@ public class GeometryFactory {
 	@JsConstructor
 	public GeometryFactory(PrecisionModel precisionModel) {};
 
-	@JsConstructor
-	public GeometryFactory(CoordinateSequenceFactory coordinateSequenceFactory) {};
+	// @JsConstructor
+	// public GeometryFactory(CoordinateSequenceFactory coordinateSequenceFactory)
+	// {};
 
-	public native Geometry buildGeometry(Collection geomList);
+	public native Geometry buildGeometry(Collection<Geometry> geomList);
 
 	public native Geometry createGeometry(Geometry g);
 
@@ -104,7 +105,7 @@ public class GeometryFactory {
 
 	public native Polygon createPolygon(LinearRing shell, LinearRing[] holes);
 
-	public native CoordinateSequenceFactory getCoordinateSequenceFactory();
+	// public native CoordinateSequenceFactory getCoordinateSequenceFactory();
 
 	public native PrecisionModel getPrecisionModel();
 

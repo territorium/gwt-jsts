@@ -17,6 +17,8 @@
  */
 package jsts.geom.impl;
 
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsType;
 import jsts.geom.Coordinate;
 import jsts.geom.CoordinateSequence;
 
@@ -35,29 +37,28 @@ import jsts.geom.CoordinateSequence;
  * <p>
  * </p>
  * @author <a href="mailto:mapaccel@teritoriumonline.com">Peter Zanetti</a>.
- * @version 4.0.0,25.11.2016
- * @since 4.0.0
+ * @version 1.0.0,25.11.2016
+ * @since 1.0.0
  */
+@JsType(isNative = true)
 public class CoordinateArraySequence implements CoordinateSequence {
 
+	@JsConstructor
 	public CoordinateArraySequence(Coordinate[] coordinates) {}
 
-	public CoordinateArraySequence(Coordinate[] coordinates, int dimension) {
+	@JsConstructor
+	public CoordinateArraySequence(Coordinate[] coordinates, int dimension) {}
 
-	}
+	@JsConstructor
+	public CoordinateArraySequence(CoordinateSequence coordSeq) {}
 
-	public CoordinateArraySequence(CoordinateSequence coordSeq) {
+	@JsConstructor
+	public CoordinateArraySequence(int size) {}
 
-	}
+	@JsConstructor
+	public CoordinateArraySequence(int size, int dimension) {}
 
-	public CoordinateArraySequence(int size) {
-
-	}
-
-	public CoordinateArraySequence(int size, int dimension) {
-
-	}
-
+	@Override
 	public native Coordinate[] toCoordinateArray();
 
 }

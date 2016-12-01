@@ -23,7 +23,7 @@ import jsinterop.annotations.JsType;
 /**
  * Models a collection of Geometrys of arbitrary type and dimension.
  */
-@JsType(name = "GeometryCollection", namespace = "jsts.geom", isNative = true)
+@JsType(isNative = true)
 public class GeometryCollection extends Geometry {
 
 	/**

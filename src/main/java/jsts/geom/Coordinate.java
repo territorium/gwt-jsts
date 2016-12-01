@@ -18,7 +18,6 @@
 package jsts.geom;
 
 import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
 /**
@@ -51,41 +50,23 @@ import jsinterop.annotations.JsType;
  * @version 1.0.0,25.11.2016
  * @since 1.0.0
  */
-@JsType(name = "Coordinate", namespace = "jsts.geom", isNative = true)
+@JsType(isNative = true)
 public class Coordinate {
 
 	/**
 	 * The x-coordinate.
 	 */
-	@JsProperty(name = "x")
 	public double	x;
 
 	/**
 	 * The y-coordinate.
 	 */
-	@JsProperty(name = "y")
 	public double	y;
 
 	/**
 	 * The z-coordinate.
 	 */
-	@JsProperty(name = "z")
 	public double	z;
-
-	/**
-	 * Constructs a(n) {@link Coordinate} object.
-	 *
-	 */
-	@JsConstructor
-	public Coordinate() {}
-
-	/**
-	 * Constructs a(n) {@link Coordinate} having the same (x,y,z) values as other.
-	 *
-	 * @param c
-	 */
-	@JsConstructor
-	public Coordinate(Coordinate c) {}
 
 	/**
 	 * Constructs a(n) {@link Coordinate} object.
@@ -95,16 +76,6 @@ public class Coordinate {
 	 */
 	@JsConstructor
 	public Coordinate(double x, double y) {}
-
-	/**
-	 * Constructs a(n) {@link Coordinate} object.
-	 *
-	 * @param x
-	 * @param y
-	 * @param z
-	 */
-	@JsConstructor
-	public Coordinate(double x, double y, double z) {}
 
 	public native void setCoordinate(Coordinate other);
 
@@ -119,10 +90,6 @@ public class Coordinate {
 	public native boolean equals3D(Coordinate other);
 
 	public native boolean equalInZ(Coordinate c, double tolerance);
-
-	public native boolean equals(Object other);
-
-	public native int compareTo(Object o);
 
 	public native Coordinate copy();
 

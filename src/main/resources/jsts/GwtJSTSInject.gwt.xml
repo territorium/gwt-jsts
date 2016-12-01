@@ -5,4 +5,6 @@
   <inherits name="ol.GwtOL3" />
 
   <source path="" />
+  
+  <entry-point class="jsts.GwtJSTS" />  
 </module>

@@ -41,7 +41,7 @@ public class GwtJSTS implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
-		JSApiLoader.load();
+		JsResLoader.load();
 	}
 
 }

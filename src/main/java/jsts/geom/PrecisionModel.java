@@ -56,7 +56,7 @@ import jsinterop.annotations.JsType;
  * precision models. The precision model of any constructed geometric value is
  * undefined.
  */
-@JsType(name = "PrecisionModel", namespace = "jsts.geom", isNative = true)
+@JsType(isNative = true)
 public class PrecisionModel {
 
 	@JsProperty(name = "FIXED")

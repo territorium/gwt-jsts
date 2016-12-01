@@ -25,7 +25,7 @@ import jsinterop.annotations.JsType;
  * Polygons in a MultiPolygon may not overlap, and may only touch at single
  * points. This allows the topological point-set semantics to be well-defined.
  */
-@JsType(name = "MultiPolygon", namespace = "jsts.geom", isNative = true)
+@JsType(isNative = true)
 public class MultiPolygon extends GeometryCollection {
 
 	/**

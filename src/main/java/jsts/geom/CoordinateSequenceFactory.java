@@ -17,6 +17,10 @@
  */
 package jsts.geom;
 
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsProperty;
+import jsinterop.annotations.JsType;
+
 /**
  *
  * <p>
@@ -33,16 +37,27 @@ package jsts.geom;
  * <p>
  * </p>
  * @author <a href="mailto:mapaccel@teritoriumonline.com">Peter Zanetti</a>.
- * @version 4.0.0,25.11.2016
- * @since 4.0.0
+ * @version 1.0.0,25.11.2016
+ * @since 1.0.0
  */
-// @JsType(name = "CoordinateSequenceFactory", namespace = "jsts.geom", isNative
-// = true)
-public interface CoordinateSequenceFactory {
+@JsType(isNative = true)
+public abstract class CoordinateSequenceFactory {
 
-	public CoordinateSequenceFactory create(Coordinate[] coordinates);
+	@JsProperty(name = "create")
+	public native CoordinateSequenceFactory create(Object... arguments);
 
-	public CoordinateSequenceFactory create(CoordinateSequence coordSeq);
+	@JsIgnore
+	public CoordinateSequenceFactory create(Coordinate[] coordinates) {
+		return create(coordinates);
+	}
 
-	public CoordinateSequenceFactory create(int size, int dimension);
+	@JsIgnore
+	public CoordinateSequenceFactory create(CoordinateSequence coordSeq) {
+		return create(coordSeq);
+	}
+
+	@JsIgnore
+	public CoordinateSequenceFactory create(int size, int dimension) {
+		return create(size, dimension);
+	}
 }

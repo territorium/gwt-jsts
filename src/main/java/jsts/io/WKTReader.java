@@ -42,7 +42,7 @@ import jsts.geom.GeometryFactory;
  * numbers to floating point. This means it supports the Java syntax for
  * floating point literals (including scientific notation).
  */
-@JsType(name = "WKTReader", namespace = "jsts.io", isNative = true)
+@JsType(isNative = true)
 public class WKTReader {
 
 	/**

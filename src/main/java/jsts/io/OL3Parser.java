@@ -33,7 +33,7 @@ import jsts.geom.Polygon;
 /**
  * OpenLayers 3 Geometry parser and writer
  */
-@JsType(name = "OL3Parser", namespace = "jsts.io", isNative = true)
+@JsType(isNative = true)
 public class OL3Parser {
 
 	/**

@@ -15,15 +15,12 @@
  * License for the specific language governing rights and limitations under the
  * License.
  */
-package jsts.geom;
-
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsType;
+package jsts;
 
 /**
  *
  * <p>
- * The <code>Point</code> class
+ * The <code>JsAPI</code> class
  * </p>
  * <p>
  * Copyright: 2003 - 2016 <a href="http://www.teritoriumonline.com">Territorium
@@ -35,15 +32,12 @@ import jsinterop.annotations.JsType;
  * <p>
  * </p>
  * @author <a href="mailto:mapaccel@teritoriumonline.com">Peter Zanetti</a>.
- * @version 1.0.0,25.11.2016
+ * @version 1.0.0,30.11.2016
  * @since 1.0.0
  */
-@JsType(isNative = true)
-public class Point extends Geometry {
+public interface JsAPI {
 
-	@JsConstructor
-	public Point(CoordinateSequence coordinates, GeometryFactory factory) {
-		super(factory);
-	}
-
+	public final static String	NS			= "jsts";
+	public final static String	NS_GEOM	= "jsts.geom";
+	public final static String	NS_IO		= "jsts.io";
 }

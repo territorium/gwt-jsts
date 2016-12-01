@@ -35,10 +35,10 @@ import jsinterop.annotations.JsType;
  * <p>
  * </p>
  * @author <a href="mailto:mapaccel@teritoriumonline.com">Peter Zanetti</a>.
- * @version 4.0.0,28.11.2016
- * @since 4.0.0
+ * @version 1.0.0,28.11.2016
+ * @since 1.0.0
  */
-@JsType(name = "LineSegment", namespace = "jsts.geom", isNative = true)
+@JsType(isNative = true)
 public class LineSegment {
 
 	/**

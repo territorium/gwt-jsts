@@ -37,10 +37,10 @@ import jsinterop.annotations.JsType;
  * <p>
  * </p>
  * @author <a href="mailto:mapaccel@teritoriumonline.com">Peter Zanetti</a>.
- * @version 4.0.0,28.11.2016
- * @since 4.0.0
+ * @version 1.0.0,28.11.2016
+ * @since 1.0.0
  */
-@JsType(name = "CoordinateList", namespace = "jsts.geom", isNative = true)
+@JsType(isNative = true)
 public class CoordinateList {
 
 	/**
@@ -123,7 +123,7 @@ public class CoordinateList {
 	 * boolean)
 	 */
 
-	public native boolean addAll(Collection coll, boolean allowRepeated);
+	public native boolean addAll(Collection<Coordinate> coll, boolean allowRepeated);
 
 	/*
 	 * @see com.vividsolutions.jts.geom.CoordinateList#closeRing()

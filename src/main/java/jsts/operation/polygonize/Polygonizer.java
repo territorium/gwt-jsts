@@ -40,7 +40,7 @@ import jsts.geom.Geometry;
  * This is useful for situations where it is known that the input lines form a
  * valid polygonal geometry.
  */
-@JsType(name = "Polygonizer", namespace = "jsts.operation.polygonize", isNative = true)
+@JsType(isNative = true)
 public class Polygonizer {
 
 	/**

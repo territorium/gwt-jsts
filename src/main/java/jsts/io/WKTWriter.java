@@ -35,7 +35,7 @@ import jsts.geom.GeometryFactory;
  * constructed geometries, JTS also supports a non-standard LINEARRING tag which
  * is used to output LinearRings.
  */
-@JsType(name = "WKTWriter", namespace = "jsts.io", isNative = true)
+@JsType(isNative = true)
 public class WKTWriter {
 
 	@JsConstructor

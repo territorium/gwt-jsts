@@ -38,7 +38,7 @@ import jsinterop.annotations.JsType;
  * interior of the polygon disconnected (i.e. effectively split the polygon into
  * two pieces).
  */
-@JsType(name = "Polygon", namespace = "jsts.geom", isNative = true)
+@JsType(isNative = true)
 public class Polygon extends Geometry {
 
 	@JsConstructor

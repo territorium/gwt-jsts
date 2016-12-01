@@ -39,12 +39,16 @@ import com.google.gwt.junit.client.GWTTestCase;
  */
 public class GwtJSTSTestCase extends GWTTestCase {
 
-	private static final String	MODUL_NAME	= "jsts.GwtJSTSTest";
-	private static final int		TEST_DELAY	= 10000;
+	private static final String MODUL_NAME = "jsts.GwtJSTSTest";
 
 	@Override
 	public String getModuleName() {
 		return GwtJSTSTestCase.MODUL_NAME;
 	}
 
+	@Override
+	protected void gwtSetUp() throws Exception {
+		super.gwtSetUp();
+
+	}
 }
