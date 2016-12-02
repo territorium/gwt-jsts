@@ -69,16 +69,6 @@ public abstract class Geometry {
 	 */
 	public native Geometry buffer(double distance, int quadrantSegments, int endCapStyle);
 
-	/**
-	 * 
-	 * Returns whether this Geometry is greater than, equal to, or less than
-	 * another Geometry.
-	 *
-	 * @param o
-	 * @return
-	 */
-	public native int compareTo(Object o);
-
 	public native boolean contains(Geometry g);
 
 	/**

@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsType;
 import jsts.algorithm.CGAlgorithms;
@@ -114,7 +116,7 @@ public class GeometryUtil {
 	 * @param coordinates the array of <code>Coordinate</code>
 	 * @return a <code>Polygon</code>
 	 */
-	public static Polygon createPolygon(Coordinate[] coordinates) {
+	public static Polygon createPolygon(@NotNull Coordinate... coordinates) {
 
 		// Isolate coordinates which forms a ring
 		ArrayList<Coordinate[]> coordListArray = new ArrayList<Coordinate[]>();
@@ -181,7 +183,7 @@ public class GeometryUtil {
 	 * @param holeList
 	 * @return a CW {@link LinearRing} or null
 	 */
-	private static LinearRing getShell(List<LinearRing> holeList) {
+	private static LinearRing getShell(@NotNull List<LinearRing> holeList) {
 		for (int i = holeList.size() - 1; i >= 0; i--) {
 			LinearRing r1 = holeList.get(i);
 			Polygon p1 = GeometryUtil.createInvertedPolygon(r1.getCoordinateSequence());
@@ -205,7 +207,7 @@ public class GeometryUtil {
 		return GeometryUtil.getFloatingGeomFactory().createLinearRing(GeometryUtil.invertOrientation(coordSeq));
 	}
 
-	private static LinearRing createInvertedLinearRing(Coordinate[] coords) {
+	private static LinearRing createInvertedLinearRing(Coordinate... coords) {
 		return GeometryUtil.getFloatingGeomFactory()
 				.createLinearRing(GeometryUtil.invertOrientation(new CoordinateArraySequence(coords)));
 	}
@@ -232,7 +234,7 @@ public class GeometryUtil {
 	 * @param bufferValue
 	 * @return
 	 */
-	public static boolean intersects(Geometry geom, Geometry point, double bufferValue) {
+	public static boolean intersects(@NotNull Geometry geom, @NotNull Geometry point, double bufferValue) {
 		if (bufferValue > 0)
 			point = point.buffer(bufferValue, 0);
 
@@ -246,7 +248,7 @@ public class GeometryUtil {
 	 * @param geom
 	 * @return
 	 */
-	public static boolean isMultiPart(Geometry geom) {
+	public static boolean isMultiPart(@NotNull Geometry geom) {
 		return (geom instanceof GeometryCollection || geom instanceof MultiLineString || geom instanceof MultiPoint
 				|| geom instanceof MultiPolygon);
 	}
@@ -260,11 +262,8 @@ public class GeometryUtil {
 	 * @return
 	 */
 	@JsIgnore
-	public static Geometry difference(Geometry first, Geometry second) {
-		if (first != null && second != null) {
-			return first.difference(second);
-		}
-		return null;
+	public static Geometry difference(@NotNull Geometry first, @NotNull Geometry second) {
+		return first.difference(second);
 	}
 
 	/**
@@ -275,12 +274,8 @@ public class GeometryUtil {
 	 * @return
 	 */
 	@JsIgnore
-	public static Geometry intersect(Geometry first, Geometry second) {
-		if (first != null && second != null) {
-			return first.intersection(second);
-		}
-		return null;
-
+	public static Geometry intersect(@NotNull Geometry first, @NotNull Geometry second) {
+		return first.intersection(second);
 	}
 
 	/**
@@ -292,11 +287,8 @@ public class GeometryUtil {
 	 * @param quadrantSegments
 	 * @return
 	 */
-	public static Geometry buffer(Geometry geom, double distance, int quadrantSegments) {
-		if (geom != null) {
-			return geom.buffer(distance, quadrantSegments);
-		}
-		return null;
+	public static Geometry buffer(@NotNull Geometry geom, double distance, int quadrantSegments) {
+		return geom.buffer(distance, quadrantSegments);
 	}
 
 	/**
@@ -307,7 +299,7 @@ public class GeometryUtil {
 	 * @param geometryB
 	 * @return
 	 */
-	public static boolean isWithin(Geometry geometryA, Geometry geometryB) {
+	public static boolean isWithin(@NotNull Geometry geometryA, @NotNull Geometry geometryB) {
 		return geometryB.touches(geometryA);
 	}
 
@@ -315,16 +307,13 @@ public class GeometryUtil {
 	 * 
 	 * creates the union geom of the passed geometries
 	 *
-	 * @param firstGeometry
-	 * @param secondGeometry
+	 * @param first
+	 * @param second
 	 * @return
 	 */
 	@JsIgnore
-	public static Geometry union(Geometry firstGeometry, Geometry secondGeometry) {
-		if (firstGeometry != null && secondGeometry != null) {
-			return firstGeometry.union(secondGeometry);
-		}
-		return null;
+	public static Geometry union(@NotNull Geometry first, @NotNull Geometry second) {
+		return first.union(second);
 	}
 
 	/**
@@ -334,16 +323,14 @@ public class GeometryUtil {
 	 * @param geom
 	 * @return
 	 */
-	public static List<Geometry> getHoles(Geometry geom) {
+	public static List<Geometry> getHoles(@NotNull Geometry geom) {
 		List<Geometry> holes = new ArrayList<Geometry>();
-		if (geom != null) {
-			if (geom instanceof Polygon) {
-				addHoles(holes, (Polygon) geom);
-			} else if (geom instanceof MultiPolygon) {
-				MultiPolygon multi = (MultiPolygon) geom;
-				for (int i = 0; i < multi.getNumGeometries(); i++) {
-					addHoles(holes, (Polygon) multi.getGeometryN(i));
-				}
+		if (geom instanceof Polygon) {
+			addHoles(holes, (Polygon) geom);
+		} else if (geom instanceof MultiPolygon) {
+			MultiPolygon multi = (MultiPolygon) geom;
+			for (int i = 0; i < multi.getNumGeometries(); i++) {
+				addHoles(holes, (Polygon) multi.getGeometryN(i));
 			}
 		}
 		return holes;
@@ -356,7 +343,7 @@ public class GeometryUtil {
 	 * @param list
 	 * @param polygon
 	 */
-	private static void addHoles(List<Geometry> list, Polygon polygon) {
+	private static void addHoles(@NotNull List<Geometry> list, @NotNull Polygon polygon) {
 		for (int i = 0; i < polygon.getNumInteriorRing(); i++) {
 			LineString hole = polygon.getInteriorRingN(i);
 			list.add(getHole(hole));
@@ -370,7 +357,7 @@ public class GeometryUtil {
 	 * @param lineString
 	 * @return
 	 */
-	private static Geometry getHole(LineString lineString) {
+	private static Geometry getHole(@NotNull LineString lineString) {
 		return getSingleGeomFactory().createPolygon(lineString.getCoordinates());
 	}
 
@@ -382,52 +369,50 @@ public class GeometryUtil {
 	 * @param island
 	 * @return
 	 */
-	public static Geometry fillHole(Geometry geom, Geometry island) {
+	public static Geometry fillHole(@NotNull Geometry geom, @NotNull Geometry island) {
 		Geometry newGeom = null;
-		if (geom != null && island != null) {
-			if (geom instanceof MultiPolygon) {
-				MultiPolygon multiPoly = (MultiPolygon) geom;
-				int iSourcePoly = -1;
-				for (int iPoly = 0; iPoly < multiPoly.getNumGeometries(); iPoly++) {
-					Polygon polyN = (Polygon) multiPoly.getGeometryN(iPoly);
-					for (int iRing = 0; iRing < polyN.getNumInteriorRing(); iRing++) {
-						LineString ringN = polyN.getInteriorRingN(iRing);
-						Polygon islandN = getSingleGeomFactory().createPolygon(ringN.getCoordinateSequence());
-						if (island.equals(islandN)) {
-							iSourcePoly = iPoly;
-							break;
-						}
-					}
-					if (iSourcePoly > -1) {
+		if (geom instanceof MultiPolygon) {
+			MultiPolygon multiPoly = (MultiPolygon) geom;
+			int iSourcePoly = -1;
+			for (int iPoly = 0; iPoly < multiPoly.getNumGeometries(); iPoly++) {
+				Polygon polyN = (Polygon) multiPoly.getGeometryN(iPoly);
+				for (int iRing = 0; iRing < polyN.getNumInteriorRing(); iRing++) {
+					LineString ringN = polyN.getInteriorRingN(iRing);
+					Polygon islandN = getSingleGeomFactory().createPolygon(ringN.getCoordinateSequence());
+					if (island.equals(islandN)) {
+						iSourcePoly = iPoly;
 						break;
 					}
 				}
 				if (iSourcePoly > -1) {
-					Polygon polyWithHole = (Polygon) multiPoly.getGeometryN(iSourcePoly);
-					Geometry otherShellGeom = null;
-					Geometry otherGeom = null;
-					for (int iPoly = 0; iPoly < multiPoly.getNumGeometries(); iPoly++) {
-						if (iPoly != iSourcePoly) {
-							Polygon polyN = (Polygon) multiPoly.getGeometryN(iPoly);
-							LineString ringN = polyN.getExteriorRing();
-							Polygon shell = getSingleGeomFactory().createPolygon(ringN.getCoordinateSequence());
-							otherShellGeom = (otherShellGeom == null) ? shell : otherShellGeom.union(shell);
-							otherGeom = (otherGeom == null) ? polyN : otherGeom.union(polyN);
-						}
-					}
-
-					// Create new Geometry stepwise
-					newGeom = polyWithHole.union(otherGeom);
-					Geometry diffGeom = island.difference(otherShellGeom);
-					if (diffGeom != null && !diffGeom.isEmpty()) {
-						newGeom = newGeom.union(diffGeom);
-					} else {
-						newGeom = newGeom.union(island);
+					break;
+				}
+			}
+			if (iSourcePoly > -1) {
+				Polygon polyWithHole = (Polygon) multiPoly.getGeometryN(iSourcePoly);
+				Geometry otherShellGeom = null;
+				Geometry otherGeom = null;
+				for (int iPoly = 0; iPoly < multiPoly.getNumGeometries(); iPoly++) {
+					if (iPoly != iSourcePoly) {
+						Polygon polyN = (Polygon) multiPoly.getGeometryN(iPoly);
+						LineString ringN = polyN.getExteriorRing();
+						Polygon shell = getSingleGeomFactory().createPolygon(ringN.getCoordinateSequence());
+						otherShellGeom = (otherShellGeom == null) ? shell : otherShellGeom.union(shell);
+						otherGeom = (otherGeom == null) ? polyN : otherGeom.union(polyN);
 					}
 				}
-			} else {
-				newGeom = geom.union(island);
+
+				// Create new Geometry stepwise
+				newGeom = polyWithHole.union(otherGeom);
+				Geometry diffGeom = island.difference(otherShellGeom);
+				if (diffGeom != null && !diffGeom.isEmpty()) {
+					newGeom = newGeom.union(diffGeom);
+				} else {
+					newGeom = newGeom.union(island);
+				}
 			}
+		} else {
+			newGeom = geom.union(island);
 		}
 		return newGeom;
 	}
@@ -440,7 +425,7 @@ public class GeometryUtil {
 	 * @param hole
 	 * @return
 	 */
-	public static Geometry addHole(Geometry geom, Geometry hole) {
+	public static Geometry addHole(@NotNull Geometry geom, @NotNull Geometry hole) {
 		return GeometryUtil.difference(geom, hole);
 	}
 
@@ -448,12 +433,12 @@ public class GeometryUtil {
 	 * 
 	 * creates the union geom of the passed geometries
 	 *
-	 * @param geometries
+	 * @param geoms
 	 * @return
 	 */
-	public static Geometry union(List<Geometry> geometries) {
+	public static Geometry union(@NotNull Collection<Geometry> geoms) {
 		Geometry all = null;
-		for (Geometry geom : geometries) {
+		for (Geometry geom : geoms) {
 			if (geom == null)
 				continue;
 			if (all == null)
@@ -468,12 +453,12 @@ public class GeometryUtil {
 	 * 
 	 * creates the difference geom of the passed geometries
 	 *
-	 * @param geometries
+	 * @param geoms
 	 * @return
 	 */
-	public static Geometry difference(List<Geometry> geometries) {
+	public static Geometry difference(@NotNull Collection<Geometry> geoms) {
 		Geometry all = null;
-		for (Geometry geom : geometries) {
+		for (Geometry geom : geoms) {
 			if (geom == null)
 				continue;
 			if (all == null)
@@ -488,12 +473,12 @@ public class GeometryUtil {
 	 * 
 	 * creates the intersect geom of the passed geometries
 	 *
-	 * @param geometries
+	 * @param geoms
 	 * @return
 	 */
-	public static Geometry intersect(List<Geometry> geometries) {
+	public static Geometry intersect(@NotNull Collection<Geometry> geoms) {
 		Geometry all = null;
-		for (Geometry geom : geometries) {
+		for (Geometry geom : geoms) {
 			if (geom == null)
 				continue;
 			if (all == null)
@@ -512,7 +497,8 @@ public class GeometryUtil {
 	 * @param splitLine
 	 * @return
 	 */
-	public static List<Geometry> split(Geometry geom, Geometry splitLine) {
+	@NotNull
+	public static List<Geometry> split(@NotNull Geometry geom, @NotNull Geometry splitLine) {
 		List<Geometry> resultGeoms = new ArrayList<Geometry>();
 		if (geom instanceof Polygon || geom instanceof MultiPolygon) {
 			Geometry mlString = geom.getBoundary();
@@ -540,15 +526,15 @@ public class GeometryUtil {
 		return resultGeoms;
 	}
 
-	public static Geometry fromWKT(String wkt) {
+	public static Geometry fromWKT(@NotNull String wkt) {
 		return GeometryUtil.WKT_READER.read(wkt);
 	}
 
-	public static ol.geom.Geometry toOl3(Geometry geom) {
+	public static ol.geom.Geometry toOl3(@NotNull Geometry geom) {
 		return GeometryUtil.getOL3Parser().write(geom);
 	}
 
-	public static Geometry fromOl3(ol.geom.Geometry geom) {
+	public static Geometry fromOl3(@NotNull ol.geom.Geometry geom) {
 		return GeometryUtil.getOL3Parser().read(geom);
 	}
 }
