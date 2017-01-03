@@ -59,9 +59,9 @@ public abstract class JsResLoader {
 	public static void load() {
 		if (!loading) {
 			// Start loading the library.
-			loading = true;
-			ScriptInjector.fromString(getJsRes().jsts().getText()).setWindow(ScriptInjector.TOP_WINDOW).inject();
+			ScriptInjector.fromString(JsResLoader.getJsRes().jsts().getText()).setWindow(ScriptInjector.TOP_WINDOW).inject();
 			ScriptInjector.fromString(JsResLoader.getJsRes().ol3().getText()).setWindow(ScriptInjector.TOP_WINDOW).inject();
+			loading = true;
 		}
 	}
 

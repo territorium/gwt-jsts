@@ -1,8 +1,8 @@
-/* Polyfill service v3.13.0
- * For detailed credits and licence information see http://github.com/financial-times/polyfill-service
- *
- * - Array.prototype.fill, License: CC0 */
-
+// JSTS. See https://github.com/bjornharrtell/jsts
+// Licenses:
+// https://github.com/bjornharrtell/jsts/blob/master/LICENSE_EDLv1.txt
+// https://github.com/bjornharrtell/jsts/blob/master/LICENSE_EPLv1.txt
+// https://github.com/bjornharrtell/jsts/blob/master/LICENSE_LICENSE_ES6_COLLECTIONS.txt
 if (!('fill' in Array.prototype)) {
   Object.defineProperty(Array.prototype, 'fill', {
     configurable: true,
