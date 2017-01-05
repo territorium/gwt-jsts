@@ -50,16 +50,22 @@ import jsinterop.annotations.JsType;
 public class LineString extends Geometry {
 
 	@JsConstructor
-	public LineString(CoordinateSequence points, GeometryFactory factory) {
-		super(factory);
-	}
+	protected LineString() {}
 
-	/**
-	 * 
-	 * {@link #getCoordinateSequence}
-	 *
-	 * @return
-	 */
+	@JsConstructor
+	public LineString(CoordinateSequence points, GeometryFactory factory) {}
+
 	public native CoordinateSequence getCoordinateSequence();
 
+	public native Coordinate[] getCoordinates();
+
+	public native Coordinate getStartPoint();
+
+	public native Coordinate getEndPoint();
+
+	public native boolean isRing();
+
+	public native boolean isClosed();
+
+	public native void init(CoordinateSequence points);
 }

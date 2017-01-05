@@ -19,6 +19,7 @@ package jsts.geom;
 
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsType;
+import jsts.JsArray;
 
 /**
  * Represents a polygon with linear edges, which may include holes. The outer
@@ -42,11 +43,7 @@ import jsinterop.annotations.JsType;
 public class Polygon extends Geometry {
 
 	@JsConstructor
-	public Polygon(LinearRing shell, LinearRing[] holes, GeometryFactory factory) {
-		super(factory);
-	}
-
-	public native boolean isRectangle();
+	public Polygon(LinearRing shell, JsArray<LinearRing> holes, GeometryFactory factory) {}
 
 	/**
 	 * 
@@ -73,8 +70,12 @@ public class Polygon extends Geometry {
 	 */
 	public native LineString getInteriorRingN(int i);
 
-	public native double getArea();
-
-	public native double getLength();
-
+	/**
+	 * 
+	 * Returns an array containing the values of all the vertices for this
+	 * geometry.
+	 *
+	 * @return
+	 */
+	public native Coordinate[] getCoordinates();
 }

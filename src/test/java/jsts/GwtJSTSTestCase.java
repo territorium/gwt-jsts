@@ -17,7 +17,13 @@
  */
 package jsts;
 
+import com.google.gwt.core.client.ScriptInjector;
 import com.google.gwt.junit.client.GWTTestCase;
+
+import jsts.geom.Coordinate;
+import jsts.geom.CoordinateList;
+import jsts.geom.GeometryFactory;
+import jsts.geom.PrecisionModel;
 
 /**
  *
@@ -39,16 +45,42 @@ import com.google.gwt.junit.client.GWTTestCase;
  */
 public class GwtJSTSTestCase extends GWTTestCase {
 
-	private static final String MODUL_NAME = "jsts.GwtJSTSTest";
+	public static final String	MULTIPOLYGON	= "MULTIPOLYGON (((260 10, 260 80, 810 80, 810 10, 260 10)), ((260 100, 260 420, 810 420, 810 100, 260 100)))";
+	public static final String	POLYGON				= "POLYGON ((260 250, 810 250, 810 50, 260 50, 260 250))";
+
+	private static final String	MODUL_NAME		= "jsts.GwtJSTSTest";
 
 	@Override
 	public String getModuleName() {
 		return GwtJSTSTestCase.MODUL_NAME;
 	}
 
-	@Override
-	protected void gwtSetUp() throws Exception {
-		super.gwtSetUp();
+	protected final void inject() {
+		// Start loading the library.
+		ScriptInjector.fromString(JsResLoader.getJsRes().jsts().getText()).setWindow(ScriptInjector.TOP_WINDOW).inject();
+		// ScriptInjector.fromString(JsResLoader.getJsRes().jstsMin().getText()).setWindow(ScriptInjector.TOP_WINDOW).inject();
+		ScriptInjector.fromString(JsResLoader.getJsRes().ol3().getText()).setWindow(ScriptInjector.TOP_WINDOW).inject();
+	}
 
+	protected GeometryFactory createGeometryFactory() {
+		return new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING));
+	}
+
+	protected final Coordinate[] createCoordinates() {
+		return new Coordinate[] {
+				new Coordinate(260, 250), new Coordinate(810, 250), new Coordinate(810, 50), new Coordinate(260, 50),
+				new Coordinate(260, 250) };
+	}
+
+	protected final JsArray<Coordinate> createCoordinateArray() {
+		return JsArrayUtils.create(createCoordinates());
+	}
+
+	protected final CoordinateList createCoordinateList() {
+		CoordinateList coordList = new CoordinateList();
+		for (Coordinate coord : createCoordinates()) {
+			coordList.add(coord);
+		}
+		return coordList;
 	}
 }

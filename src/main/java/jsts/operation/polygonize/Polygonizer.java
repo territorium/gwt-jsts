@@ -17,9 +17,10 @@
  */
 package jsts.operation.polygonize;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 import jsinterop.annotations.JsType;
+import jsts.JsAPI;
 import jsts.geom.Geometry;
 
 /**
@@ -40,7 +41,7 @@ import jsts.geom.Geometry;
  * This is useful for situations where it is known that the input lines form a
  * valid polygonal geometry.
  */
-@JsType(isNative = true)
+@JsType(namespace = JsAPI.NS, isNative = true)
 public class Polygonizer {
 
 	/**
@@ -57,6 +58,6 @@ public class Polygonizer {
 	 *
 	 * @return
 	 */
-	public native Collection<Geometry> getPolygons();
+	public native ArrayList<Geometry> getPolygons();
 
 }

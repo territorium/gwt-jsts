@@ -17,10 +17,13 @@
  */
 package jsts.geom;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsType;
+import jsts.JsArray;
+import jsts.JsArrayUtils;
 
 /**
  * Supplies a set of utility methods for building Geometry objects from lists of
@@ -51,66 +54,97 @@ public class GeometryFactory {
 	@JsConstructor
 	public GeometryFactory(PrecisionModel precisionModel) {};
 
-	// @JsConstructor
-	// public GeometryFactory(CoordinateSequenceFactory coordinateSequenceFactory)
-	// {};
+	public native Geometry toGeometry(Envelope envelope);
 
-	public native Geometry buildGeometry(Collection<Geometry> geomList);
+	public native JsArray<Geometry> toGeometryArray(ArrayList<Geometry> geometries);
+
+	public native Geometry buildGeometry(ArrayList<Geometry> geometries);
 
 	public native Geometry createGeometry(Geometry g);
 
 	public native GeometryCollection createGeometryCollection();
 
-	public native GeometryCollection createGeometryCollection(Geometry[] geometries);
+	public native GeometryCollection createGeometryCollection(JsArray<Geometry> geometries);
+
+	@JsOverlay
+	public final GeometryCollection createGeometryCollection(Geometry[] geometries) {
+		return createGeometryCollection(JsArrayUtils.create(geometries));
+	}
+
+	@JsOverlay
+	public final GeometryCollection createGeometryCollection(ArrayList<Geometry> geometries) {
+		return createGeometryCollection(toGeometryArray(geometries));
+	}
 
 	public native LinearRing createLinearRing();
 
-	public native LinearRing createLinearRing(Coordinate[] coordinates);
+	public native LinearRing createLinearRing(JsArray<Coordinate> coordinates);
+
+	@JsOverlay
+	public final LinearRing createLinearRing(Coordinate[] coordinates) {
+		return createLinearRing(JsArrayUtils.create(coordinates));
+	}
 
 	public native LinearRing createLinearRing(CoordinateSequence invertOrientation);
 
 	public native LineString createLineString();
 
-	public native LineString createLineString(Coordinate[] coordinates);
+	public native LineString createLineString(JsArray<Coordinate> coordinates);
+
+	@JsOverlay
+	public final LineString createLineString(Coordinate[] coordinates) {
+		return createLineString(JsArrayUtils.create(coordinates));
+	}
 
 	public native LineString createLineString(CoordinateSequence coordinates);
 
-	public native MultiLineString createMultiLineString();
-
-	public native MultiLineString createMultiLineString(LineString[] lineStrings);
-
-	public native MultiPoint createMultiPoint();
-
-	public native MultiPoint createMultiPoint(CoordinateSequence coordinates);
-
-	public native MultiPoint createMultiPoint(Point[] point);
-
-	public native MultiPoint createMultiPointFromCoords(Coordinate[] coordinates);
-
-	public native MultiPolygon createMultiPolygon();
-
-	public native MultiPolygon createMultiPolygon(Polygon[] polygons);
-
-	public native Point createPoint();
-
-	public native Point createPoint(Coordinate coordinate);
+	// public native MultiLineString createMultiLineString();
+	//
+	// public native MultiLineString createMultiLineString(LineString[]
+	// lineStrings);
+	//
+	// public native MultiPoint createMultiPoint();
+	//
+	// public native MultiPoint createMultiPoint(CoordinateSequence coordinates);
+	//
+	// public native MultiPoint createMultiPoint(Point[] point);
+	//
+	// public native MultiPoint createMultiPointFromCoords(Coordinate[]
+	// coordinates);
+	//
+	// public native MultiPolygon createMultiPolygon();
+	//
+	// public native MultiPolygon createMultiPolygon(Polygon[] polygons);
+	//
+	// public native Point createPoint();
+	//
+	// public native Point createPoint(Coordinate coordinate);
 
 	public native Polygon createPolygon();
 
-	public native Polygon createPolygon(Coordinate[] coordinates);
+	public native Polygon createPolygon(JsArray<Coordinate> coordinates);
+
+	@JsOverlay
+	public final Polygon createPolygon(Coordinate[] coordinates) {
+		return createPolygon(JsArrayUtils.create(coordinates));
+	}
 
 	public native Polygon createPolygon(CoordinateSequence coordinates);
 
 	public native Polygon createPolygon(LinearRing shell);
 
-	public native Polygon createPolygon(LinearRing shell, LinearRing[] holes);
+	public native Polygon createPolygon(LinearRing shell, JsArray<LinearRing> holes);
 
-	// public native CoordinateSequenceFactory getCoordinateSequenceFactory();
+	@JsOverlay
+	public final Polygon createPolygon(LinearRing shell, LinearRing[] holes) {
+		return createPolygon(shell, JsArrayUtils.create(holes));
+	}
 
 	public native PrecisionModel getPrecisionModel();
 
+	public native CoordinateSequenceFactory getCoordinateSequenceFactory();
+
+	public static native CoordinateSequenceFactory getDefaultCoordinateSequenceFactory();
+
 	public native int getSRID();
-
-	public native Geometry toGeometry(Envelope envelope);
-
 }

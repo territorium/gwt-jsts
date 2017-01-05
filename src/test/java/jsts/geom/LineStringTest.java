@@ -15,19 +15,16 @@
  * License for the specific language governing rights and limitations under the
  * License.
  */
-package jsts.io;
+package jsts.geom;
 
 import org.junit.Test;
 
 import jsts.GwtJSTSTestCase;
-import jsts.geom.Geometry;
-import jsts.geom.Polygon;
-import jsts.util.GeometryUtil;
 
 /**
  *
  * <p>
- * The <code>OL3ParserTest</code> is a test case for {@link OL3Parser}
+ * The <code>LineStringTest</code> is a test case for {@link LineString}
  * </p>
  * <p>
  * Copyright: 2003 - 2016 <a href="http://www.teritoriumonline.com">Territorium
@@ -38,35 +35,41 @@ import jsts.util.GeometryUtil;
  * </p>
  * <p>
  * </p>
- * @author <a href="mailto:mapaccel@teritoriumonline.com">Peter Zanetti</a>.
- * @version 1.0.0,24.11.2016
- * @since 1.0.0
+ * @author <a href="mailto:peter.zanetti@territoriumonline.com">Peter
+ *         Zanetti</a>.
+ * @version 1.0,30.12.2016
+ * @since 1.0.
  */
-public class OL3ParserTest extends GwtJSTSTestCase {
+public class LineStringTest extends GwtJSTSTestCase {
 
 	@Test
-	public void testCreateOL3Parser() {
+	public void testCreateEmptyLineString() {
 		inject();
-		OL3Parser parser = new OL3Parser();
-		assertNotNull(parser);
+		GeometryFactory geometryFactory = createGeometryFactory();
+		LineString lineString = new LineString(null, geometryFactory);
+		assertNotNull(lineString);
+		assertTrue(lineString.isEmpty());
 	}
 
 	@Test
-	public void testWriteGeometry() {
+	public void testCreateLineString() {
 		inject();
-		OL3Parser parser = new OL3Parser();
-		assertNotNull(parser);
+		GeometryFactory geometryFactory = createGeometryFactory();
+		assertNotNull(geometryFactory);
 
-		Geometry geometry = GeometryUtil.fromWKT(GwtJSTSTestCase.POLYGON);
-		assertNotNull(geometry);
-		assertTrue(geometry instanceof Polygon);
-		Polygon jtsPolygon = (Polygon) geometry;
+		Coordinate[] points = createCoordinates();
 
-		ol.geom.Geometry olGeom = parser.write(jtsPolygon);
-		assertNotNull(olGeom);
-		assertTrue(olGeom instanceof ol.geom.Polygon);
+		CoordinateSequenceFactory coordSeqFactory = geometryFactory.getCoordinateSequenceFactory();
+		assertNotNull(coordSeqFactory);
 
-		ol.geom.Polygon ol3Polygon = (ol.geom.Polygon) olGeom;
-		assertTrue(jtsPolygon.getCoordinates().length == ol3Polygon.getCoordinates()[0].length);
+		CoordinateSequence coordSeq = coordSeqFactory.create(points);
+		assertNotNull(coordSeq);
+
+		LineString lineString = new LineString(coordSeq, geometryFactory);
+		assertNotNull(lineString);
+		assertTrue(lineString.isValid());
+		assertTrue(lineString.isClosed());
+		assertTrue(lineString.isRing());
+		assertTrue(lineString.getCoordinates().length == 5);
 	}
 }

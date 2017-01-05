@@ -19,8 +19,14 @@ package jsts;
 
 import com.google.gwt.junit.tools.GWTTestSuite;
 
+import jsts.geom.CoordinateListTest;
+import jsts.geom.CoordinateTest;
+import jsts.geom.GeometryFactoryTest;
+import jsts.geom.LineStringTest;
+import jsts.geom.LinearRingTest;
+import jsts.geom.PolygonTest;
 import jsts.io.OL3ParserTest;
-import jsts.util.Ol3GeometryUtilTest;
+import jsts.util.GeometryUtilTest;
 import junit.framework.TestSuite;
 
 /**
@@ -50,8 +56,16 @@ public class GwtJSTSTestSuite extends GWTTestSuite {
 	 */
 	public static TestSuite suite() {
 		TestSuite suite = new TestSuite("Tests for GwtJSTS-Wrapper");
+		suite.addTestSuite(CoordinateListTest.class);
+		suite.addTestSuite(CoordinateTest.class);
+		suite.addTestSuite(LineStringTest.class);
+		suite.addTestSuite(LinearRingTest.class);
+		suite.addTestSuite(PolygonTest.class);
+		suite.addTestSuite(GeometryFactoryTest.class);
+
+		suite.addTestSuite(GeometryUtilTest.class);
+
 		suite.addTestSuite(OL3ParserTest.class);
-		suite.addTestSuite(Ol3GeometryUtilTest.class);
 		return suite;
 	}
 

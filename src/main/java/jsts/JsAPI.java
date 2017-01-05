@@ -40,4 +40,6 @@ public interface JsAPI {
 	public final static String	NS			= "jsts";
 	public final static String	NS_GEOM	= "jsts.geom";
 	public final static String	NS_IO		= "jsts.io";
+	public final static String	NS_UTIL	= "jsts.util";
+
 }

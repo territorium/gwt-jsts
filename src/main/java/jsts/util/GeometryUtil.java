@@ -24,10 +24,13 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsType;
+import jsts.JsAPI;
 import jsts.algorithm.CGAlgorithms;
 import jsts.geom.Coordinate;
 import jsts.geom.CoordinateSequence;
+import jsts.geom.CoordinateSequenceFactory;
 import jsts.geom.Geometry;
 import jsts.geom.GeometryCollection;
 import jsts.geom.GeometryFactory;
@@ -38,7 +41,6 @@ import jsts.geom.MultiPoint;
 import jsts.geom.MultiPolygon;
 import jsts.geom.Polygon;
 import jsts.geom.PrecisionModel;
-import jsts.geom.impl.CoordinateArraySequence;
 import jsts.io.OL3Parser;
 import jsts.io.WKTReader;
 import jsts.operation.polygonize.Polygonizer;
@@ -61,7 +63,7 @@ import jsts.operation.polygonize.Polygonizer;
  * @version 1.0.0,25.11.2016
  * @since 1.0.0
  */
-@JsType()
+@JsType(name = "GeometryUtil", namespace = JsAPI.NS_UTIL, isNative = false)
 public class GeometryUtil {
 
 	public static final String			DEFAULT_CS	= " ";
@@ -74,6 +76,7 @@ public class GeometryUtil {
 	private static WKTReader				WKT_READER;
 	private static OL3Parser				OL3_PARSER;
 
+	@JsMethod
 	public static GeometryFactory getFloatingGeomFactory() {
 		if (GEOM_FACTORY == null) {
 			GEOM_FACTORY = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING));
@@ -81,6 +84,7 @@ public class GeometryUtil {
 		return GEOM_FACTORY;
 	}
 
+	@JsMethod
 	public static GeometryFactory getSingleGeomFactory() {
 		if (GEOM_FACTORY_0001 == null) {
 			GEOM_FACTORY_0001 = new GeometryFactory(new PrecisionModel(GeometryUtil.PRECISION));
@@ -88,6 +92,7 @@ public class GeometryUtil {
 		return GEOM_FACTORY_0001;
 	}
 
+	@JsMethod
 	public static WKTReader getWKTReader() {
 		if (WKT_READER == null) {
 			WKT_READER = new WKTReader(GeometryUtil.getFloatingGeomFactory());
@@ -95,6 +100,7 @@ public class GeometryUtil {
 		return WKT_READER;
 	}
 
+	@JsMethod
 	public static OL3Parser getOL3Parser() {
 		if (OL3_PARSER == null) {
 			OL3_PARSER = new OL3Parser();
@@ -116,7 +122,8 @@ public class GeometryUtil {
 	 * @param coordinates the array of <code>Coordinate</code>
 	 * @return a <code>Polygon</code>
 	 */
-	public static Polygon createPolygon(@NotNull Coordinate... coordinates) {
+	@JsMethod
+	public static Polygon createPolygon(@NotNull Coordinate[] coordinates) {
 
 		// Isolate coordinates which forms a ring
 		ArrayList<Coordinate[]> coordListArray = new ArrayList<Coordinate[]>();
@@ -200,16 +207,17 @@ public class GeometryUtil {
 
 	private static Polygon createInvertedPolygon(CoordinateSequence coordSeq) {
 		LinearRing shell = GeometryUtil.createInvertedLinearRing(coordSeq);
-		return GeometryUtil.getFloatingGeomFactory().createPolygon(shell, null);
+		return GeometryUtil.getFloatingGeomFactory().createPolygon(shell);
 	}
 
 	private static LinearRing createInvertedLinearRing(CoordinateSequence coordSeq) {
 		return GeometryUtil.getFloatingGeomFactory().createLinearRing(GeometryUtil.invertOrientation(coordSeq));
 	}
 
-	private static LinearRing createInvertedLinearRing(Coordinate... coords) {
-		return GeometryUtil.getFloatingGeomFactory()
-				.createLinearRing(GeometryUtil.invertOrientation(new CoordinateArraySequence(coords)));
+	private static LinearRing createInvertedLinearRing(Coordinate[] coords) {
+		GeometryFactory geometryFactory = GeometryUtil.getFloatingGeomFactory();
+		return geometryFactory.createLinearRing(
+				GeometryUtil.invertOrientation(geometryFactory.getCoordinateSequenceFactory().create(coords)));
 	}
 
 	private static CoordinateSequence invertOrientation(Coordinate[] coords) {
@@ -218,11 +226,12 @@ public class GeometryUtil {
 		for (int i = 0; i < size; i++) {
 			invertedCoords[i] = coords[size - 1 - i];
 		}
-		return new CoordinateArraySequence(invertedCoords);
+		return GeometryUtil.getFloatingGeomFactory().getCoordinateSequenceFactory().create(invertedCoords);
 	}
 
 	private static CoordinateSequence invertOrientation(CoordinateSequence coordSeq) {
-		return new CoordinateArraySequence(GeometryUtil.invertOrientation(coordSeq.toCoordinateArray()));
+		return GeometryUtil.getFloatingGeomFactory().getCoordinateSequenceFactory()
+				.create(GeometryUtil.invertOrientation(coordSeq.toCoordinateArray()));
 	}
 
 	/**
@@ -234,6 +243,7 @@ public class GeometryUtil {
 	 * @param bufferValue
 	 * @return
 	 */
+	@JsMethod
 	public static boolean intersects(@NotNull Geometry geom, @NotNull Geometry point, double bufferValue) {
 		if (bufferValue > 0)
 			point = point.buffer(bufferValue, 0);
@@ -248,6 +258,7 @@ public class GeometryUtil {
 	 * @param geom
 	 * @return
 	 */
+	@JsMethod
 	public static boolean isMultiPart(@NotNull Geometry geom) {
 		return (geom instanceof GeometryCollection || geom instanceof MultiLineString || geom instanceof MultiPoint
 				|| geom instanceof MultiPolygon);
@@ -287,6 +298,7 @@ public class GeometryUtil {
 	 * @param quadrantSegments
 	 * @return
 	 */
+	@JsMethod
 	public static Geometry buffer(@NotNull Geometry geom, double distance, int quadrantSegments) {
 		return geom.buffer(distance, quadrantSegments);
 	}
@@ -299,6 +311,7 @@ public class GeometryUtil {
 	 * @param geometryB
 	 * @return
 	 */
+	@JsMethod
 	public static boolean isWithin(@NotNull Geometry geometryA, @NotNull Geometry geometryB) {
 		return geometryB.touches(geometryA);
 	}
@@ -323,6 +336,7 @@ public class GeometryUtil {
 	 * @param geom
 	 * @return
 	 */
+	@JsMethod
 	public static List<Geometry> getHoles(@NotNull Geometry geom) {
 		List<Geometry> holes = new ArrayList<Geometry>();
 		if (geom instanceof Polygon) {
@@ -358,7 +372,7 @@ public class GeometryUtil {
 	 * @return
 	 */
 	private static Geometry getHole(@NotNull LineString lineString) {
-		return getSingleGeomFactory().createPolygon(lineString.getCoordinates());
+		return getSingleGeomFactory().createPolygon(lineString.getCoordinateSequence());
 	}
 
 	/**
@@ -369,6 +383,8 @@ public class GeometryUtil {
 	 * @param island
 	 * @return
 	 */
+
+	@JsMethod
 	public static Geometry fillHole(@NotNull Geometry geom, @NotNull Geometry island) {
 		Geometry newGeom = null;
 		if (geom instanceof MultiPolygon) {
@@ -425,6 +441,8 @@ public class GeometryUtil {
 	 * @param hole
 	 * @return
 	 */
+
+	@JsMethod
 	public static Geometry addHole(@NotNull Geometry geom, @NotNull Geometry hole) {
 		return GeometryUtil.difference(geom, hole);
 	}
@@ -436,6 +454,8 @@ public class GeometryUtil {
 	 * @param geoms
 	 * @return
 	 */
+
+	@JsMethod
 	public static Geometry union(@NotNull Collection<Geometry> geoms) {
 		Geometry all = null;
 		for (Geometry geom : geoms) {
@@ -456,6 +476,8 @@ public class GeometryUtil {
 	 * @param geoms
 	 * @return
 	 */
+
+	@JsMethod
 	public static Geometry difference(@NotNull Collection<Geometry> geoms) {
 		Geometry all = null;
 		for (Geometry geom : geoms) {
@@ -476,6 +498,8 @@ public class GeometryUtil {
 	 * @param geoms
 	 * @return
 	 */
+
+	@JsMethod
 	public static Geometry intersect(@NotNull Collection<Geometry> geoms) {
 		Geometry all = null;
 		for (Geometry geom : geoms) {
@@ -498,6 +522,7 @@ public class GeometryUtil {
 	 * @return
 	 */
 	@NotNull
+	@JsMethod
 	public static List<Geometry> split(@NotNull Geometry geom, @NotNull Geometry splitLine) {
 		List<Geometry> resultGeoms = new ArrayList<Geometry>();
 		if (geom instanceof Polygon || geom instanceof MultiPolygon) {
@@ -507,13 +532,12 @@ public class GeometryUtil {
 			for (int i = 0; i < unionLines.getNumGeometries(); i++) {
 				polygonizer.add(unionLines.getGeometryN(i));
 			}
-			Collection<Geometry> polygons = polygonizer.getPolygons();
-			GeometryCollection polyGeom = getSingleGeomFactory().createGeometryCollection((Geometry[]) polygons.toArray());
+			ArrayList<Geometry> polygons = polygonizer.getPolygons();
+			GeometryCollection polyGeom = getSingleGeomFactory().createGeometryCollection(polygons);
 
 			for (int i = 0; i < polyGeom.getNumGeometries(); i++) {
 				Geometry intersectGeom = geom.intersection(polyGeom.getGeometryN(i));
-				if ((intersectGeom instanceof Polygon || intersectGeom instanceof MultiPolygon)
-						&& intersectGeom.getCoordinates().length > 0) {
+				if ((intersectGeom instanceof Polygon || intersectGeom instanceof MultiPolygon) && !intersectGeom.isEmpty()) {
 					resultGeoms.add(intersectGeom);
 				}
 			}
@@ -526,15 +550,38 @@ public class GeometryUtil {
 		return resultGeoms;
 	}
 
+	@JsMethod
 	public static Geometry fromWKT(@NotNull String wkt) {
-		return GeometryUtil.WKT_READER.read(wkt);
+		return GeometryUtil.getWKTReader().read(wkt);
 	}
 
+	@JsMethod
 	public static ol.geom.Geometry toOl3(@NotNull Geometry geom) {
 		return GeometryUtil.getOL3Parser().write(geom);
 	}
 
+	@JsMethod
 	public static Geometry fromOl3(@NotNull ol.geom.Geometry geom) {
 		return GeometryUtil.getOL3Parser().read(geom);
+	}
+
+	@JsMethod
+	public static LinearRing createEmptyLinearRing() {
+		GeometryFactory geometryFactory = getSingleGeomFactory();
+		Coordinate[] coords = new Coordinate[] { new Coordinate(0, 0) };
+		LinearRing linearRing = geometryFactory.createLinearRing(coords);
+		return linearRing;
+	}
+
+	@JsMethod
+	public static LinearRing createLinearRing() {
+		GeometryFactory geometryFactory = getSingleGeomFactory();
+		Coordinate[] coords = new Coordinate[] {
+				new Coordinate(260, 250), new Coordinate(810, 250), new Coordinate(810, 50), new Coordinate(260, 50),
+				new Coordinate(260, 250) };
+		CoordinateSequenceFactory coordSeqFactory = geometryFactory.getCoordinateSequenceFactory();
+		CoordinateSequence coordSeq = coordSeqFactory.create(coords);
+		LinearRing linearRing = new LinearRing(coordSeq, geometryFactory);
+		return linearRing;
 	}
 }

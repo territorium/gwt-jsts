@@ -42,9 +42,7 @@ import jsinterop.annotations.JsType;
 public class MultiPoint extends GeometryCollection {
 
 	@JsConstructor
-	public MultiPoint(Point[] points, GeometryFactory factory) {
-		super(factory);
-	}
+	public MultiPoint(Point[] points, GeometryFactory factory) {}
 
 	protected native Coordinate getCoordinate(int n);
 

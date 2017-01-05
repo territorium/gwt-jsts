@@ -17,20 +17,14 @@
  */
 package jsts.geom;
 
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsType;
+import org.junit.Test;
+
+import jsts.GwtJSTSTestCase;
 
 /**
  *
  * <p>
- * Models an OGC SFS LinearRing. A LinearRing is a LineString which is both
- * closed and simple. In other words, the first and last coordinate in the ring
- * must be equal, and the interior of the ring must not self-intersect. Either
- * orientation of the ring is allowed.
- * 
- * A ring must have either 0 or 4 or more points. The first and last points must
- * be equal (in 2D). If these conditions are not met, the constructors throw an
- * IllegalArgumentException
+ * The <code>CoordinateTest</code> is a test case for {@link Coordinate}
  * </p>
  * <p>
  * Copyright: 2003 - 2016 <a href="http://www.teritoriumonline.com">Territorium
@@ -41,20 +35,44 @@ import jsinterop.annotations.JsType;
  * </p>
  * <p>
  * </p>
- * @author <a href="mailto:mapaccel@teritoriumonline.com">Peter Zanetti</a>.
- * @version 1.0.0,25.11.2016
- * @since 1.0.0
+ * @author <a href="mailto:peter.zanetti@territoriumonline.com">Peter
+ *         Zanetti</a>.
+ * @version 1.0,30.12.2016
+ * @since 1.0.
  */
-@JsType(isNative = true)
-public class LinearRing extends LineString {
+public class CoordinateTest extends GwtJSTSTestCase {
 
-	@JsConstructor
-	public LinearRing(CoordinateSequence points, GeometryFactory factory) {}
+	@Test
+	public void testCreateEmptyCoordinate() {
+		inject();
+		Coordinate coord = new Coordinate();
+		assertNotNull(coord);
+	}
 
-	@JsConstructor
-	@Deprecated
-	public LinearRing(Coordinate coord, GeometryFactory factory) {}
+	@Test
+	public void testCreateXYCoordinate() {
+		inject();
+		Coordinate coord = new Coordinate(0d, 1d);
+		assertNotNull(coord);
+		assertTrue(0d == coord.getX());
+		assertTrue(1d == coord.getY());
+	}
 
-	// public LinearRing(JsArray<Coordinate> points, GeometryFactory factory) {}
+	@Test
+	public void testCreateXYZCoordinate() {
+		inject();
+		Coordinate coord = new Coordinate(0d, 1d, 2d);
+		assertNotNull(coord);
+		assertTrue(2d == coord.getZ());
+	}
 
+	@Test
+	public void testDistance() {
+		inject();
+		Coordinate coord1 = new Coordinate(0d, 0d);
+		Coordinate coord2 = new Coordinate(0d, 1d);
+		assertNotNull(coord1);
+		assertNotNull(coord2);
+		assertTrue(1d == coord1.distance(coord2));
+	}
 }

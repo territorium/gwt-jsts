@@ -42,8 +42,6 @@ import jsinterop.annotations.JsType;
 public class Point extends Geometry {
 
 	@JsConstructor
-	public Point(CoordinateSequence coordinates, GeometryFactory factory) {
-		super(factory);
-	}
+	public Point(CoordinateSequence coordinates, GeometryFactory factory) {}
 
 }

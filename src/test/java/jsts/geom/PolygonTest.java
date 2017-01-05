@@ -17,20 +17,14 @@
  */
 package jsts.geom;
 
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsType;
+import org.junit.Test;
+
+import jsts.GwtJSTSTestCase;
 
 /**
  *
  * <p>
- * Models an OGC SFS LinearRing. A LinearRing is a LineString which is both
- * closed and simple. In other words, the first and last coordinate in the ring
- * must be equal, and the interior of the ring must not self-intersect. Either
- * orientation of the ring is allowed.
- * 
- * A ring must have either 0 or 4 or more points. The first and last points must
- * be equal (in 2D). If these conditions are not met, the constructors throw an
- * IllegalArgumentException
+ * The <code>PolygonTest</code> is a test case for {@link Polygon}
  * </p>
  * <p>
  * Copyright: 2003 - 2016 <a href="http://www.teritoriumonline.com">Territorium
@@ -41,20 +35,33 @@ import jsinterop.annotations.JsType;
  * </p>
  * <p>
  * </p>
- * @author <a href="mailto:mapaccel@teritoriumonline.com">Peter Zanetti</a>.
- * @version 1.0.0,25.11.2016
- * @since 1.0.0
+ * @author <a href="mailto:peter.zanetti@territoriumonline.com">Peter
+ *         Zanetti</a>.
+ * @version 1.0,30.12.2016
+ * @since 1.0.
  */
-@JsType(isNative = true)
-public class LinearRing extends LineString {
+public class PolygonTest extends GwtJSTSTestCase {
 
-	@JsConstructor
-	public LinearRing(CoordinateSequence points, GeometryFactory factory) {}
+	@Test
+	public void testCreateEmptyPolygon() {
+		inject();
+		GeometryFactory geometryFactory = createGeometryFactory();
+		Polygon polygon = new Polygon(null, null, geometryFactory);
+		assertNotNull(polygon);
+		assertTrue(polygon.isEmpty());
+	}
 
-	@JsConstructor
-	@Deprecated
-	public LinearRing(Coordinate coord, GeometryFactory factory) {}
+	@Test
+	public void testCreatePolygon() {
+		inject();
+		GeometryFactory geometryFactory = createGeometryFactory();
+		Coordinate[] coords = createCoordinates();
+		LinearRing linearRing = geometryFactory.createLinearRing(coords);
+		assertNotNull(linearRing);
+		assertTrue(linearRing instanceof LinearRing);
 
-	// public LinearRing(JsArray<Coordinate> points, GeometryFactory factory) {}
-
+		Polygon polygon = new Polygon(linearRing, null, geometryFactory);
+		assertNotNull(polygon);
+		assertTrue(polygon.isValid());
+	}
 }

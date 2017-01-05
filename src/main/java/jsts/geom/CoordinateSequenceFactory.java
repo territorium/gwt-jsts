@@ -17,9 +17,10 @@
  */
 package jsts.geom;
 
-import jsinterop.annotations.JsIgnore;
-import jsinterop.annotations.JsProperty;
+import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsType;
+import jsts.JsArray;
+import jsts.JsArrayUtils;
 
 /**
  *
@@ -43,21 +44,14 @@ import jsinterop.annotations.JsType;
 @JsType(isNative = true)
 public abstract class CoordinateSequenceFactory {
 
-	@JsProperty(name = "create")
-	public native CoordinateSequenceFactory create(Object... arguments);
+	public native CoordinateSequence create(JsArray<Coordinate> coords);
 
-	@JsIgnore
-	public CoordinateSequenceFactory create(Coordinate[] coordinates) {
-		return create(coordinates);
+	@JsOverlay
+	public final CoordinateSequence create(Coordinate[] coords) {
+		return create(JsArrayUtils.create(coords));
 	}
 
-	@JsIgnore
-	public CoordinateSequenceFactory create(CoordinateSequence coordSeq) {
-		return create(coordSeq);
-	}
+	public native CoordinateSequence create(CoordinateSequence coordSeq);
 
-	@JsIgnore
-	public CoordinateSequenceFactory create(int size, int dimension) {
-		return create(size, dimension);
-	}
+	public native CoordinateSequence create(int size, int dimension);
 }

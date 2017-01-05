@@ -36,8 +36,6 @@ public class MultiPolygon extends GeometryCollection {
 	 * @param geometryFactory
 	 */
 	@JsConstructor
-	public MultiPolygon(Polygon[] polygons, GeometryFactory geometryFactory) {
-		super(geometryFactory);
-	}
+	public MultiPolygon(Polygon[] polygons, GeometryFactory geometryFactory) {}
 
 }

@@ -1,6 +1,8 @@
 target/
 .settings/
 gwt-unitCache/
+www-test/
+war/
 .classpath
 .project
 *.class

@@ -17,7 +17,10 @@
  */
 package jsts.geom;
 
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
+import jsts.JsArray;
 
 /**
  * The internal representation of a list of coordinates inside a Geometry. This
@@ -35,16 +38,18 @@ import jsinterop.annotations.JsType;
  * 
  * For an example, see the code for ExtendedCoordinateExample.
  */
-@JsType(isNative = true)
-public abstract class CoordinateSequence {
+@JsType(isNative = true, namespace = JsPackage.GLOBAL)
+public class CoordinateArraySequence extends CoordinateSequence {
 
-	public native Coordinate[] toCoordinateArray();
+	@JsConstructor
+	public CoordinateArraySequence(int size) {}
 
-	public native double getX(int index);
+	@JsConstructor
+	public CoordinateArraySequence(int size, int dimension) {}
 
-	public native double getY(int index);
+	@JsConstructor
+	public CoordinateArraySequence(JsArray<Coordinate> coords) {}
 
-	public native int size();
-
-	public native int getDimension();
+	@JsConstructor
+	public CoordinateArraySequence(CoordinateSequence coordSeq) {}
 }

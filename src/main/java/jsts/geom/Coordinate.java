@@ -18,6 +18,7 @@
 package jsts.geom;
 
 import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
 /**
@@ -53,29 +54,14 @@ import jsinterop.annotations.JsType;
 @JsType(isNative = true)
 public class Coordinate {
 
-	/**
-	 * The x-coordinate.
-	 */
-	public double	x;
+	@JsConstructor
+	public Coordinate() {}
 
-	/**
-	 * The y-coordinate.
-	 */
-	public double	y;
-
-	/**
-	 * The z-coordinate.
-	 */
-	public double	z;
-
-	/**
-	 * Constructs a(n) {@link Coordinate} object.
-	 *
-	 * @param x
-	 * @param y
-	 */
 	@JsConstructor
 	public Coordinate(double x, double y) {}
+
+	@JsConstructor
+	public Coordinate(double x, double y, double z) {}
 
 	public native void setCoordinate(Coordinate other);
 
@@ -96,5 +82,23 @@ public class Coordinate {
 	public native double distance(Coordinate c);
 
 	public native double distance3D(Coordinate c);
+
+	@JsProperty(name = "x")
+	public native double getX();
+
+	@JsProperty(name = "x")
+	public native void setX(double x);
+
+	@JsProperty(name = "y")
+	public native double getY();
+
+	@JsProperty(name = "y")
+	public native void setY(double y);
+
+	@JsProperty(name = "z")
+	public native double getZ();
+
+	@JsProperty(name = "z")
+	public native void setZ(double z);
 
 }

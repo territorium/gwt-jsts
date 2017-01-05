@@ -18,7 +18,7 @@
 package jsts.geom;
 
 import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsProperty;
+import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsType;
 
 /**
@@ -59,13 +59,13 @@ import jsinterop.annotations.JsType;
 @JsType(isNative = true)
 public class PrecisionModel {
 
-	@JsProperty(name = "FIXED")
+	@JsOverlay
 	public static Type	FIXED;
 
-	@JsProperty(name = "FLOATING")
+	@JsOverlay
 	public static Type	FLOATING;
 
-	@JsProperty(name = "FLOATING_SINGLE")
+	@JsOverlay
 	public static Type	FLOATING_SINGLE;
 
 	/**

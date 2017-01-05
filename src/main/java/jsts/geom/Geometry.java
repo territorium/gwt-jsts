@@ -28,6 +28,9 @@ import jsinterop.annotations.JsType;
 @JsType(isNative = true)
 public abstract class Geometry {
 
+	@JsConstructor
+	protected Geometry() {}
+
 	/**
 	 * Constructs a(n) {@link Geometry} object.
 	 *
@@ -126,6 +129,10 @@ public abstract class Geometry {
 
 	public native void geometryChanged();
 
+	public native double getArea();
+
+	public native double getLength();
+
 	/**
 	 * 
 	 * Returns the boundary, or an empty geometry of appropriate dimension if this
@@ -145,15 +152,6 @@ public abstract class Geometry {
 	 * @return
 	 */
 	public native Coordinate getCoordinate();
-
-	/**
-	 * 
-	 * Returns an array containing the values of all the vertices for this
-	 * geometry.
-	 *
-	 * @return
-	 */
-	public native Coordinate[] getCoordinates();
 
 	public native Geometry getEnvelope();
 
@@ -215,7 +213,7 @@ public abstract class Geometry {
 	 */
 	public native boolean isEmpty();
 
-	protected native boolean isEquivalentClass(Geometry other);
+	public native boolean isRectangle();
 
 	/**
 	 * Tests whether this is an instance of a general GeometryCollection, rather

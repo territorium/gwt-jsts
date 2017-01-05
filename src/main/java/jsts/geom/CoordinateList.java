@@ -20,7 +20,10 @@ package jsts.geom;
 import java.util.Collection;
 
 import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsType;
+import jsts.JsArray;
+import jsts.JsArrayUtils;
 
 /**
  *
@@ -53,10 +56,10 @@ public class CoordinateList {
 	/**
 	 * Constructs a(n) {@link CoordinateList} object.
 	 *
-	 * @param coord
+	 * @param coords
 	 */
 	@JsConstructor
-	public CoordinateList(Coordinate[] coord) {}
+	public CoordinateList(JsArray<Coordinate> coords) {}
 
 	/**
 	 * Constructs a(n) {@link CoordinateList} object.
@@ -65,76 +68,34 @@ public class CoordinateList {
 	 * @param allowRepeated
 	 */
 	@JsConstructor
-	public CoordinateList(Coordinate[] coord, boolean allowRepeated) {}
-
-	/*
-	 * @see com.vividsolutions.jts.geom.CoordinateList#getCoordinate(int)
-	 */
+	public CoordinateList(JsArray<Coordinate> coords, boolean allowRepeated) {}
 
 	public native Coordinate getCoordinate(int i);
 
-	/*
-	 * @see
-	 * com.vividsolutions.jts.geom.CoordinateList#add(com.vividsolutions.jts.geom.
-	 * Coordinate[], boolean, int, int)
-	 */
-
-	public native boolean add(Coordinate[] coord, boolean allowRepeated, int start, int end);
-
-	/*
-	 * @see
-	 * com.vividsolutions.jts.geom.CoordinateList#add(com.vividsolutions.jts.geom.
-	 * Coordinate[], boolean, boolean)
-	 */
-
-	public native boolean add(Coordinate[] coord, boolean allowRepeated, boolean direction);
-
-	/*
-	 * @see
-	 * com.vividsolutions.jts.geom.CoordinateList#add(com.vividsolutions.jts.geom.
-	 * Coordinate[], boolean)
-	 */
-
-	public native boolean add(Coordinate[] coord, boolean allowRepeated);
-
-	/*
-	 * @see com.vividsolutions.jts.geom.CoordinateList#add(java.lang.Object,
-	 * boolean)
-	 */
-
-	public native boolean add(Object obj, boolean allowRepeated);
-	/*
-	 * @see
-	 * com.vividsolutions.jts.geom.CoordinateList#add(com.vividsolutions.jts.geom.
-	 * Coordinate, boolean)
-	 */
+	public native boolean add(Coordinate coord);
 
 	public native void add(Coordinate coord, boolean allowRepeated);
-	/*
-	 * @see com.vividsolutions.jts.geom.CoordinateList#add(int,
-	 * com.vividsolutions.jts.geom.Coordinate, boolean)
-	 */
+
+	public native void add(JsArray<Coordinate> coord, boolean allowRepeated);
+
+	public native boolean add(JsArray<Coordinate> coord, boolean allowRepeated, int start, int end);
+
+	public native boolean add(JsArray<Coordinate> coord, boolean allowRepeated, boolean direction);
 
 	public native void add(int i, Coordinate coord, boolean allowRepeated);
 
-	/*
-	 * @see
-	 * com.vividsolutions.jts.geom.CoordinateList#addAll(java.util.Collection,
-	 * boolean)
-	 */
+	public native boolean addAll(Collection<Coordinate> coll);
 
 	public native boolean addAll(Collection<Coordinate> coll, boolean allowRepeated);
 
-	/*
-	 * @see com.vividsolutions.jts.geom.CoordinateList#closeRing()
-	 */
-
 	public native void closeRing();
-
-	/*
-	 * @see com.vividsolutions.jts.geom.CoordinateList#toCoordinateArray()
-	 */
 
 	public native Coordinate[] toCoordinateArray();
 
+	public native int size();
+
+	@JsOverlay
+	public static final CoordinateList create(Coordinate[] coords) {
+		return new CoordinateList(JsArrayUtils.create(coords), true);
+	}
 }

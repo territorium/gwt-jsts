@@ -15,22 +15,18 @@
  * License for the specific language governing rights and limitations under the
  * License.
  */
-package jsts.geom;
+package jsts;
 
-import jsinterop.annotations.JsConstructor;
+import javax.validation.constraints.NotNull;
+
+import jsinterop.annotations.JsPackage;
+import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
 /**
  *
  * <p>
- * Models an OGC SFS LinearRing. A LinearRing is a LineString which is both
- * closed and simple. In other words, the first and last coordinate in the ring
- * must be equal, and the interior of the ring must not self-intersect. Either
- * orientation of the ring is allowed.
- * 
- * A ring must have either 0 or 4 or more points. The first and last points must
- * be equal (in 2D). If these conditions are not met, the constructors throw an
- * IllegalArgumentException
+ * The <code>JsArray</code> class
  * </p>
  * <p>
  * Copyright: 2003 - 2016 <a href="http://www.teritoriumonline.com">Territorium
@@ -41,20 +37,37 @@ import jsinterop.annotations.JsType;
  * </p>
  * <p>
  * </p>
- * @author <a href="mailto:mapaccel@teritoriumonline.com">Peter Zanetti</a>.
- * @version 1.0.0,25.11.2016
- * @since 1.0.0
+ * @author <a href="mailto:peter.zanetti@territoriumonline.com">Peter
+ *         Zanetti</a>.
+ * @version 1.0,30.12.2016
+ * @since 1.0.
  */
-@JsType(isNative = true)
-public class LinearRing extends LineString {
+@JsType(name = "Array", namespace = JsPackage.GLOBAL, isNative = true)
+public class JsArray<T> {
 
-	@JsConstructor
-	public LinearRing(CoordinateSequence points, GeometryFactory factory) {}
+	@SafeVarargs
+	public JsArray(@NotNull T... elements) {}
 
-	@JsConstructor
-	@Deprecated
-	public LinearRing(Coordinate coord, GeometryFactory factory) {}
+	@JsProperty(name = "length")
+	public native int length();
 
-	// public LinearRing(JsArray<Coordinate> points, GeometryFactory factory) {}
+	/**
+	 * Gets the object at a given index.
+	 * 
+	 * @param index the index to be retrieved
+	 * @return the object at the given index, or <code>null</code> if none exists
+	 */
+	// @JsOverlay
+	// public final native T get(int index) /*-{
+	// return this[index];
+	// }-*/;
+	//
+	// @JsOverlay
+	// public final native T[] toArray(JsArray<T> jsArray) /*-{
+	// return this;
+	// }-*/;
 
+	public native void sort();
+
+	public native int push(T element);
 }

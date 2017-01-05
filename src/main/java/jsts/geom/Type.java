@@ -18,10 +18,14 @@
 package jsts.geom;
 
 import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
 @JsType(isNative = true)
 public class Type {
+
+	@JsProperty
+	public String name;
 
 	@JsConstructor
 	public Type(String name) {}
