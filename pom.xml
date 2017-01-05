@@ -5,7 +5,7 @@
   <groupId>com.mapaccel</groupId>
   <artifactId>gwt-jsts</artifactId>
   <version>1.0.0</version>
-  <packaging>gwt-app</packaging>
+  <packaging>gwt-lib</packaging>
 
   <name>GWT-JSTS</name>
   <description>GWT JsInterop API for JSTS, ECMAScript 2015 library of spatial predicates and functions for processing geometry conforming to the simple Features Specification for SQL published by the Open Geospatial Consortium. 
