@@ -19,7 +19,7 @@ package jsts.geom;
 
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsType;
-import jsts.JsArray;
+import tol.j2cl.elem.global.Array;
 
 /**
  * Represents a polygon with linear edges, which may include holes. The outer
@@ -43,7 +43,7 @@ import jsts.JsArray;
 public class Polygon extends Geometry {
 
 	@JsConstructor
-	public Polygon(LinearRing shell, JsArray<LinearRing> holes, GeometryFactory factory) {}
+	public Polygon(LinearRing shell, Array<LinearRing> holes, GeometryFactory factory) {}
 
 	/**
 	 * 

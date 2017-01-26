@@ -22,8 +22,7 @@ import java.util.Collection;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsType;
-import jsts.JsArray;
-import jsts.JsArrayUtils;
+import tol.j2cl.elem.global.Array;
 
 /**
  *
@@ -59,7 +58,7 @@ public class CoordinateList {
 	 * @param coords
 	 */
 	@JsConstructor
-	public CoordinateList(JsArray<Coordinate> coords) {}
+	public CoordinateList(Array<Coordinate> coords) {}
 
 	/**
 	 * Constructs a(n) {@link CoordinateList} object.
@@ -68,7 +67,7 @@ public class CoordinateList {
 	 * @param allowRepeated
 	 */
 	@JsConstructor
-	public CoordinateList(JsArray<Coordinate> coords, boolean allowRepeated) {}
+	public CoordinateList(Array<Coordinate> coords, boolean allowRepeated) {}
 
 	public native Coordinate getCoordinate(int i);
 
@@ -76,11 +75,11 @@ public class CoordinateList {
 
 	public native void add(Coordinate coord, boolean allowRepeated);
 
-	public native void add(JsArray<Coordinate> coord, boolean allowRepeated);
+	public native void add(Array<Coordinate> coord, boolean allowRepeated);
 
-	public native boolean add(JsArray<Coordinate> coord, boolean allowRepeated, int start, int end);
+	public native boolean add(Array<Coordinate> coord, boolean allowRepeated, int start, int end);
 
-	public native boolean add(JsArray<Coordinate> coord, boolean allowRepeated, boolean direction);
+	public native boolean add(Array<Coordinate> coord, boolean allowRepeated, boolean direction);
 
 	public native void add(int i, Coordinate coord, boolean allowRepeated);
 
@@ -96,6 +95,6 @@ public class CoordinateList {
 
 	@JsOverlay
 	public static final CoordinateList create(Coordinate[] coords) {
-		return new CoordinateList(JsArrayUtils.create(coords), true);
+		return new CoordinateList(Array.of(coords), true);
 	}
 }

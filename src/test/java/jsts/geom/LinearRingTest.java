@@ -20,7 +20,7 @@ package jsts.geom;
 import org.junit.Test;
 
 import jsts.GwtJSTSTestCase;
-import jsts.JsArray;
+import tol.j2cl.elem.global.Array;
 
 /**
  *
@@ -57,7 +57,7 @@ public class LinearRingTest extends GwtJSTSTestCase {
 	public void testCreateLinearRingFromCoordinateArray() {
 		inject();
 		GeometryFactory geometryFactory = createGeometryFactory();
-		JsArray<Coordinate> points = createCoordinateArray();
+		Array<Coordinate> points = createCoordinateArray();
 		LinearRing linearRing = geometryFactory.createLinearRing(points);
 		assertNotNull(linearRing);
 		assertFalse(linearRing.isEmpty());

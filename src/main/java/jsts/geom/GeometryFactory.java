@@ -22,8 +22,7 @@ import java.util.ArrayList;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsType;
-import jsts.JsArray;
-import jsts.JsArrayUtils;
+import tol.j2cl.elem.global.Array;
 
 /**
  * Supplies a set of utility methods for building Geometry objects from lists of
@@ -56,7 +55,7 @@ public class GeometryFactory {
 
 	public native Geometry toGeometry(Envelope envelope);
 
-	public native JsArray<Geometry> toGeometryArray(ArrayList<Geometry> geometries);
+	public native Geometry[] toGeometryArray(ArrayList<Geometry> geometries);
 
 	public native Geometry buildGeometry(ArrayList<Geometry> geometries);
 
@@ -64,11 +63,11 @@ public class GeometryFactory {
 
 	public native GeometryCollection createGeometryCollection();
 
-	public native GeometryCollection createGeometryCollection(JsArray<Geometry> geometries);
+	public native GeometryCollection createGeometryCollection(Array<Geometry> geometries);
 
 	@JsOverlay
 	public final GeometryCollection createGeometryCollection(Geometry[] geometries) {
-		return createGeometryCollection(JsArrayUtils.create(geometries));
+		return createGeometryCollection(Array.of(geometries));
 	}
 
 	@JsOverlay
@@ -78,22 +77,22 @@ public class GeometryFactory {
 
 	public native LinearRing createLinearRing();
 
-	public native LinearRing createLinearRing(JsArray<Coordinate> coordinates);
+	public native LinearRing createLinearRing(Array<Coordinate> coordinates);
 
 	@JsOverlay
 	public final LinearRing createLinearRing(Coordinate[] coordinates) {
-		return createLinearRing(JsArrayUtils.create(coordinates));
+		return createLinearRing(Array.of(coordinates));
 	}
 
 	public native LinearRing createLinearRing(CoordinateSequence invertOrientation);
 
 	public native LineString createLineString();
 
-	public native LineString createLineString(JsArray<Coordinate> coordinates);
+	public native LineString createLineString(Array<Coordinate> coordinates);
 
 	@JsOverlay
 	public final LineString createLineString(Coordinate[] coordinates) {
-		return createLineString(JsArrayUtils.create(coordinates));
+		return createLineString(Array.of(coordinates));
 	}
 
 	public native LineString createLineString(CoordinateSequence coordinates);
@@ -122,22 +121,22 @@ public class GeometryFactory {
 
 	public native Polygon createPolygon();
 
-	public native Polygon createPolygon(JsArray<Coordinate> coordinates);
+	public native Polygon createPolygon(Array<Coordinate> coordinates);
 
 	@JsOverlay
 	public final Polygon createPolygon(Coordinate[] coordinates) {
-		return createPolygon(JsArrayUtils.create(coordinates));
+		return createPolygon(Array.of(coordinates));
 	}
 
 	public native Polygon createPolygon(CoordinateSequence coordinates);
 
 	public native Polygon createPolygon(LinearRing shell);
 
-	public native Polygon createPolygon(LinearRing shell, JsArray<LinearRing> holes);
+	public native Polygon createPolygon(LinearRing shell, Array<LinearRing> holes);
 
 	@JsOverlay
 	public final Polygon createPolygon(LinearRing shell, LinearRing[] holes) {
-		return createPolygon(shell, JsArrayUtils.create(holes));
+		return createPolygon(shell, Array.of(holes));
 	}
 
 	public native PrecisionModel getPrecisionModel();

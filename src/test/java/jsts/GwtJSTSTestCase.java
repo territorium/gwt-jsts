@@ -24,6 +24,7 @@ import jsts.geom.Coordinate;
 import jsts.geom.CoordinateList;
 import jsts.geom.GeometryFactory;
 import jsts.geom.PrecisionModel;
+import tol.j2cl.elem.global.Array;
 
 /**
  *
@@ -72,8 +73,8 @@ public class GwtJSTSTestCase extends GWTTestCase {
 				new Coordinate(260, 250) };
 	}
 
-	protected final JsArray<Coordinate> createCoordinateArray() {
-		return JsArrayUtils.create(createCoordinates());
+	protected final Array<Coordinate> createCoordinateArray() {
+		return Array.of(createCoordinates());
 	}
 
 	protected final CoordinateList createCoordinateList() {

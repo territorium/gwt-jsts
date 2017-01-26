@@ -20,8 +20,7 @@ package jsts.geom;
 import org.junit.Test;
 
 import jsts.GwtJSTSTestCase;
-import jsts.JsArray;
-import jsts.JsArrayUtils;
+import tol.j2cl.elem.global.Array;
 
 /**
  *
@@ -56,7 +55,7 @@ public class CoordinateListTest extends GwtJSTSTestCase {
 	public void testCreateCoordinateList() {
 		inject();
 		Coordinate[] coords = new Coordinate[] { new Coordinate(0, 0), new Coordinate(0, 0) };
-		CoordinateList coordList = new CoordinateList(JsArrayUtils.toJsArray(coords));
+		CoordinateList coordList = new CoordinateList(Array.of(coords));
 		assertNotNull(coordList);
 		assertTrue(coordList.size() != 0);
 		assertTrue(coordList.size() == 2);
@@ -65,7 +64,7 @@ public class CoordinateListTest extends GwtJSTSTestCase {
 	@Test
 	public void testCreateCoordinateListNotRepeated() {
 		inject();
-		JsArray<Coordinate> coords = new JsArray<Coordinate>(new Coordinate(0, 0), new Coordinate(0, 0));
+		Array<Coordinate> coords = new Array<Coordinate>(new Coordinate(0, 0), new Coordinate(0, 0));
 		CoordinateList coordList = new CoordinateList(coords, false);
 		assertNotNull(coordList);
 		assertTrue(coordList.size() != 0);
@@ -85,7 +84,7 @@ public class CoordinateListTest extends GwtJSTSTestCase {
 	@Test
 	public void testCoordinateListAddArray() {
 		inject();
-		JsArray<Coordinate> coords = createCoordinateArray();
+		Array<Coordinate> coords = createCoordinateArray();
 		CoordinateList coordList = new CoordinateList();
 		coordList.add(coords, true);
 		assertTrue(coordList.size() != 0);

@@ -20,7 +20,7 @@ package jsts.geom;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
-import jsts.JsArray;
+import tol.j2cl.elem.global.Array;
 
 /**
  * The internal representation of a list of coordinates inside a Geometry. This
@@ -48,7 +48,7 @@ public class CoordinateArraySequence extends CoordinateSequence {
 	public CoordinateArraySequence(int size, int dimension) {}
 
 	@JsConstructor
-	public CoordinateArraySequence(JsArray<Coordinate> coords) {}
+	public CoordinateArraySequence(Array<Coordinate> coords) {}
 
 	@JsConstructor
 	public CoordinateArraySequence(CoordinateSequence coordSeq) {}

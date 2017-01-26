@@ -20,7 +20,7 @@ package jsts.geom;
 import org.junit.Test;
 
 import jsts.GwtJSTSTestCase;
-import jsts.JsArray;
+import tol.j2cl.elem.global.Array;
 
 /**
  *
@@ -91,7 +91,7 @@ public class GeometryFactoryTest extends GwtJSTSTestCase {
 		CoordinateSequenceFactory coordSeqFactory = geometryFactory.getCoordinateSequenceFactory();
 		assertNotNull(coordSeqFactory);
 
-		JsArray<Coordinate> coords = createCoordinateArray();
+		Array<Coordinate> coords = createCoordinateArray();
 
 		CoordinateSequence coordSeq = coordSeqFactory.create(coords);
 		assertNotNull(coordSeq);

@@ -19,8 +19,7 @@ package jsts.geom;
 
 import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsType;
-import jsts.JsArray;
-import jsts.JsArrayUtils;
+import tol.j2cl.elem.global.Array;
 
 /**
  *
@@ -44,11 +43,11 @@ import jsts.JsArrayUtils;
 @JsType(isNative = true)
 public abstract class CoordinateSequenceFactory {
 
-	public native CoordinateSequence create(JsArray<Coordinate> coords);
+	public native CoordinateSequence create(Array<Coordinate> coords);
 
 	@JsOverlay
 	public final CoordinateSequence create(Coordinate[] coords) {
-		return create(JsArrayUtils.create(coords));
+		return create(Array.of(coords));
 	}
 
 	public native CoordinateSequence create(CoordinateSequence coordSeq);
