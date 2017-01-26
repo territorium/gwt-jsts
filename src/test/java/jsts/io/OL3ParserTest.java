@@ -59,7 +59,6 @@ public class OL3ParserTest extends GwtJSTSTestCase {
 
 		Geometry geometry = GeometryUtil.fromWKT(GwtJSTSTestCase.POLYGON);
 		assertNotNull(geometry);
-		assertTrue(geometry instanceof Polygon);
 		Polygon jtsPolygon = (Polygon) geometry;
 
 		ol.geom.Geometry olGeom = parser.write(jtsPolygon);

@@ -44,16 +44,6 @@ import tol.j2cl.elem.global.Array;
 public class LinearRingTest extends GwtJSTSTestCase {
 
 	@Test
-	public void testCreateEmptyLinearRing() {
-		inject();
-		GeometryFactory geometryFactory = createGeometryFactory();
-		Coordinate[] coords = createCoordinates();
-		LinearRing linearRing = new LinearRing(coords[0], geometryFactory);
-		assertNotNull(linearRing);
-		assertTrue(linearRing.isEmpty());
-	}
-
-	@Test
 	public void testCreateLinearRingFromCoordinateArray() {
 		inject();
 		GeometryFactory geometryFactory = createGeometryFactory();
