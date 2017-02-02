@@ -10,7 +10,7 @@
 	<inherits name="ol.GwtOL3" />
 
   <!-- Territorium Online's GWT-Elemental API used for converting Java Arrays and Map's to JavaScript -->
-  <inherits name='tol.j2cl.elem.Elemental' />
+  <inherits name="tol.j2cl.elem.Elemental" />
   
   <!-- Specify the entry point class. -->
   <entry-point class="jsts.GwtJSTS" />

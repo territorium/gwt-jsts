@@ -15,18 +15,18 @@
  * License for the specific language governing rights and limitations under the
  * License.
  */
-package jsts.util;
+package jsts;
 
 import org.junit.Test;
 
-import jsts.GwtJSTSTestCase;
+import jsts.JSTSFactory;
 import jsts.geom.Geometry;
 import jsts.geom.Polygon;
 
 /**
  *
  * <p>
- * The <code>GeometryUtilTest</code> is a test case for {@link GeometryUtil}
+ * The <code>JSTSFactoryTest</code> is a test case for {@link JSTSFactory}
  * </p>
  * <p>
  * Copyright: 2003 - 2016 <a href="http://www.teritoriumonline.com">Territorium
@@ -41,7 +41,7 @@ import jsts.geom.Polygon;
  * @version 4.0.0,26.11.2016
  * @since 4.0.0
  */
-public class GeometryUtilTest extends GwtJSTSTestCase {
+public class JSTSFactoryTest extends GwtJSTSTestCase {
 
 	private static final String	SIMPLE_POLYGON_TO_SPLIT		= "POLYGON ((260 50, 260 420, 810 420, 810 50, 260 50))";
 	private static final String	SIMPLE_SPLIT_POLYGON1			= "POLYGON ((260 250, 810 250, 810 50, 260 50, 260 250))";
@@ -60,7 +60,7 @@ public class GeometryUtilTest extends GwtJSTSTestCase {
 	@Test
 	public void testCreatePolygonFromWKT() {
 		inject();
-		Geometry geometry = GeometryUtil.fromWKT(GwtJSTSTestCase.POLYGON);
+		Geometry geometry = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON);
 		assertNotNull(geometry);
 		assertTrue(geometry instanceof Polygon);
 	}
