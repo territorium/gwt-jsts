@@ -77,7 +77,8 @@ The primary goal of the project is to provide a library converting the JTS-Geome
     <jsts.version>1.3.0</jsts.version>
 
     <!-- GWT-OpenLayers 3 version -->
-    <ol3.version>2.9.0</ol3.version>
+    <!-- <ol3.version>2.9.0</ol3.version> -->
+    <ol3.version>HEAD-SNAPSHOT</ol3.version>    
     
     <github.global.server>github</github.global.server>    
   </properties>
