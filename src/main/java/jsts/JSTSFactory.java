@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
 import jsinterop.annotations.JsIgnore;
@@ -38,6 +39,7 @@ import jsts.geom.LinearRing;
 import jsts.geom.MultiLineString;
 import jsts.geom.MultiPoint;
 import jsts.geom.MultiPolygon;
+import jsts.geom.Point;
 import jsts.geom.Polygon;
 import jsts.geom.PrecisionModel;
 import jsts.io.OL3Parser;
@@ -110,6 +112,11 @@ public class JSTSFactory {
 	@JsMethod
 	public static WKTReader createWKTReader(GeometryFactory geometryFactory) {
 		return new WKTReader(geometryFactory);
+	}
+
+	@JsMethod
+	public static Point createPoint(ol.Coordinate coord) {
+		return getFloatingGeomFactory().createPoint(new Coordinate(coord.getX(), coord.getY(), coord.getZ()));
 	}
 
 	/**
@@ -561,13 +568,19 @@ public class JSTSFactory {
 	}
 
 	@JsMethod
-	public static ol.geom.Geometry toOl3(@NotNull Geometry geom) {
-		return JSTSFactory.getOL3Parser().write(geom);
+	public static ol.geom.Geometry toOl3(@Nullable Geometry geom) {
+		if (geom != null) {
+			return JSTSFactory.getOL3Parser().write(geom);
+		}
+		return null;
 	}
 
 	@JsMethod
-	public static Geometry fromOl3(@NotNull ol.geom.Geometry geom) {
-		return JSTSFactory.getOL3Parser().read(geom);
+	public static Geometry fromOl3(@Nullable ol.geom.Geometry geom) {
+		if (geom != null) {
+			return JSTSFactory.getOL3Parser().read(geom);
+		}
+		return null;
 	}
 
 	@JsMethod
