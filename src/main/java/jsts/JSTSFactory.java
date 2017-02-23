@@ -458,6 +458,20 @@ public class JSTSFactory {
 		return JSTSFactory.difference(geom, hole);
 	}
 
+	@JsMethod
+	public static Geometry union(@NotNull Geometry geometry, @NotNull Collection<Geometry> geoms) {
+		Geometry all = geometry.copy();
+		for (Geometry geom : geoms) {
+			if (geom == null)
+				continue;
+			if (all == null)
+				all = geom;
+			else
+				all = all.union(geom);
+		}
+		return all.buffer(0);
+	}
+
 	/**
 	 * 
 	 * creates the union geom of the passed geometries
@@ -465,9 +479,8 @@ public class JSTSFactory {
 	 * @param geoms
 	 * @return
 	 */
-
 	@JsMethod
-	public static Geometry union(@NotNull Collection<Geometry> geoms) {
+	public static Geometry unionAll(@NotNull Collection<Geometry> geoms) {
 		Geometry all = null;
 		for (Geometry geom : geoms) {
 			if (geom == null)
@@ -477,7 +490,21 @@ public class JSTSFactory {
 			else
 				all = all.union(geom);
 		}
-		return all;
+		return all.buffer(0);
+	}
+
+	@JsMethod
+	public static Geometry difference(@NotNull Geometry geometry, @NotNull Collection<Geometry> geoms) {
+		Geometry all = geometry.copy();
+		for (Geometry geom : geoms) {
+			if (geom == null)
+				continue;
+			if (all == null)
+				all = geom;
+			else
+				all = all.difference(geom);
+		}
+		return all.buffer(0);
 	}
 
 	/**
@@ -487,9 +514,8 @@ public class JSTSFactory {
 	 * @param geoms
 	 * @return
 	 */
-
 	@JsMethod
-	public static Geometry difference(@NotNull Collection<Geometry> geoms) {
+	public static Geometry differenceAll(@NotNull Collection<Geometry> geoms) {
 		Geometry all = null;
 		for (Geometry geom : geoms) {
 			if (geom == null)
@@ -499,7 +525,21 @@ public class JSTSFactory {
 			else
 				all = all.difference(geom);
 		}
-		return all;
+		return all.buffer(0);
+	}
+
+	@JsMethod
+	public static Geometry intersect(@NotNull Geometry geometry, @NotNull Collection<Geometry> geoms) {
+		Geometry all = geometry.copy();
+		for (Geometry geom : geoms) {
+			if (geom == null)
+				continue;
+			if (all == null)
+				all = geom;
+			else
+				all = all.intersection(geom);
+		}
+		return all.buffer(0);
 	}
 
 	/**
@@ -509,9 +549,8 @@ public class JSTSFactory {
 	 * @param geoms
 	 * @return
 	 */
-
 	@JsMethod
-	public static Geometry intersect(@NotNull Collection<Geometry> geoms) {
+	public static Geometry intersectAll(@NotNull Collection<Geometry> geoms) {
 		Geometry all = null;
 		for (Geometry geom : geoms) {
 			if (geom == null)
@@ -521,7 +560,7 @@ public class JSTSFactory {
 			else
 				all = all.intersection(geom);
 		}
-		return all;
+		return all.buffer(0);
 	}
 
 	/**
