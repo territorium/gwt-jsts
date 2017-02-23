@@ -115,9 +115,9 @@ public class GeometryFactory {
 	//
 	// public native MultiPolygon createMultiPolygon(Polygon[] polygons);
 	//
-	// public native Point createPoint();
-	//
-	// public native Point createPoint(Coordinate coordinate);
+	public native Point createPoint();
+
+	public native Point createPoint(Coordinate coordinate);
 
 	public native Polygon createPolygon();
 
