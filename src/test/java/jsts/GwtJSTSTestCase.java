@@ -46,10 +46,13 @@ import tol.j2cl.elem.global.Array;
  */
 public class GwtJSTSTestCase extends GWTTestCase {
 
-	public static final String	MULTIPOLYGON	= "MULTIPOLYGON (((260 10, 260 80, 810 80, 810 10, 260 10)), ((260 100, 260 420, 810 420, 810 100, 260 100)))";
-	public static final String	POLYGON				= "POLYGON ((260 250, 810 250, 810 50, 260 50, 260 250))";
+	public static final String	MULTIPOLYGON_A	= "MULTIPOLYGON_A (((260 10, 260 80, 810 80, 810 10, 260 10)), ((260 100, 260 420, 810 420, 810 100, 260 100)))";
+	public static final String	POLYGON_A				= "POLYGON ((260 250, 810 250, 810 50, 260 50, 260 250))";
+	public static final String	POLYGON_B				= "POLYGON ((390 160, 390 400, 680 400, 680 160, 390 160))";
+	public static final String	POLYGON_C				= "POLYGON ((460 90, 460 190, 580 190, 580 90, 460 90))";
+	public static final String	POLYGON_D				= "POLYGON ((230 260, 230 400, 370 400, 370 260, 230 260))";
 
-	private static final String	MODUL_NAME		= "jsts.GwtJSTSTest";
+	private static final String	MODUL_NAME			= "jsts.GwtJSTSTest";
 
 	@Override
 	public String getModuleName() {

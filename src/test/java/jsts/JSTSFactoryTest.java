@@ -17,9 +17,11 @@
  */
 package jsts;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.junit.Test;
 
-import jsts.JSTSFactory;
 import jsts.geom.Geometry;
 import jsts.geom.Polygon;
 
@@ -60,9 +62,58 @@ public class JSTSFactoryTest extends GwtJSTSTestCase {
 	@Test
 	public void testCreatePolygonFromWKT() {
 		inject();
-		Geometry geometry = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON);
+		Geometry geometry = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_A);
 		assertNotNull(geometry);
 		assertTrue(geometry instanceof Polygon);
 	}
 
+	@Test
+	public void testUnion() {
+		Geometry geomA = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_A);
+		Geometry geomB = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_B);
+		Geometry geomAB = JSTSFactory
+				.fromWKT("POLYGON ((260 250, 390 250, 390 400, 680 400, 680 250, 810 250, 810 50, 260 50, 260 250))");
+		assertNotNull(geomA);
+		assertNotNull(geomB);
+		assertNotNull(geomAB);
+
+		Geometry actual = JSTSFactory.union(geomA, geomB);
+		assertEquals(geomAB, actual);
+	}
+
+	@Test
+	public void testUnionAll() {
+		Geometry geomA = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_A);
+		Geometry geomB = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_B);
+		Geometry geomC = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_C);
+		Geometry geomD = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_D);
+		Geometry geomAB = JSTSFactory
+				.fromWKT("POLYGON ((260 250, 390 250, 390 400, 680 400, 680 250, 810 250, 810 50, 260 50, 260 250))");
+		Geometry geomABCD = JSTSFactory.fromWKT(
+				"MULTIPOLYGON (((260 250, 390 250, 390 400, 680 400, 680 250, 810 250, 810 50, 260 50, 260 250)), ((230 260, 230 400, 370 400, 370 260, 230 260)))");
+		assertNotNull(geomA);
+		assertNotNull(geomB);
+		assertNotNull(geomC);
+		assertNotNull(geomD);
+		assertNotNull(geomAB);
+		assertNotNull(geomABCD);
+
+		Collection<Geometry> geoms = new ArrayList<Geometry>();
+		Geometry[] geomArray = new Geometry[4];
+		geoms.add(geomB);
+
+		Geometry actual = JSTSFactory.union(geomA, geoms.toArray(geomArray));
+		assertEquals(geomAB, actual);
+		assertFalse(JSTSFactory.isMultiPart(actual));
+
+		geoms.add(geomC);
+		actual = JSTSFactory.union(geomA, geoms.toArray(geomArray));
+		assertEquals(geomAB, actual);
+		assertFalse(JSTSFactory.isMultiPart(actual));
+
+		geoms.add(geomD);
+		actual = JSTSFactory.union(geomA, geoms.toArray(geomArray));
+		assertEquals(geomABCD, actual);
+		assertTrue(JSTSFactory.isMultiPart(actual));
+	}
 }

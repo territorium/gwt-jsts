@@ -57,7 +57,7 @@ public class OL3ParserTest extends GwtJSTSTestCase {
 		OL3Parser parser = new OL3Parser();
 		assertNotNull(parser);
 
-		Geometry geometry = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON);
+		Geometry geometry = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_A);
 		assertNotNull(geometry);
 		Polygon jtsPolygon = JSTSFactory.cast(geometry);
 

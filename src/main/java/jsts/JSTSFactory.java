@@ -459,7 +459,7 @@ public class JSTSFactory {
 	}
 
 	@JsMethod
-	public static Geometry union(@NotNull Geometry geometry, @NotNull Collection<Geometry> geoms) {
+	public static Geometry union(@NotNull Geometry geometry, @NotNull Geometry... geoms) {
 		Geometry all = geometry.copy();
 		for (Geometry geom : geoms) {
 			if (geom == null)
@@ -494,7 +494,7 @@ public class JSTSFactory {
 	}
 
 	@JsMethod
-	public static Geometry difference(@NotNull Geometry geometry, @NotNull Collection<Geometry> geoms) {
+	public static Geometry difference(@NotNull Geometry geometry, @NotNull Geometry... geoms) {
 		Geometry all = geometry.copy();
 		for (Geometry geom : geoms) {
 			if (geom == null)
@@ -529,7 +529,7 @@ public class JSTSFactory {
 	}
 
 	@JsMethod
-	public static Geometry intersect(@NotNull Geometry geometry, @NotNull Collection<Geometry> geoms) {
+	public static Geometry intersect(@NotNull Geometry geometry, Geometry... geoms) {
 		Geometry all = geometry.copy();
 		for (Geometry geom : geoms) {
 			if (geom == null)
