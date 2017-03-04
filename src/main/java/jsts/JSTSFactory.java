@@ -44,6 +44,7 @@ import jsts.geom.Polygon;
 import jsts.geom.PrecisionModel;
 import jsts.io.OL3Parser;
 import jsts.io.WKTReader;
+import jsts.io.WKTWriter;
 import jsts.operation.polygonize.Polygonizer;
 
 /**
@@ -75,6 +76,7 @@ public class JSTSFactory {
 	// workaround, not working when used multiple times????
 	private static GeometryFactory	GEOM_FACTORY_0001;
 	private static WKTReader				WKT_READER;
+	private static WKTWriter				WKT_WRITER;
 	private static OL3Parser				OL3_PARSER;
 
 	@JsMethod
@@ -99,6 +101,14 @@ public class JSTSFactory {
 			WKT_READER = new WKTReader(JSTSFactory.getFloatingGeomFactory());
 		}
 		return WKT_READER;
+	}
+
+	@JsMethod
+	public static WKTWriter getWKTWriter() {
+		if (WKT_WRITER == null) {
+			WKT_WRITER = new WKTWriter(JSTSFactory.getFloatingGeomFactory());
+		}
+		return WKT_WRITER;
 	}
 
 	@JsMethod
@@ -276,19 +286,6 @@ public class JSTSFactory {
 	}
 
 	/**
-	 * 
-	 * creates the difference of the passed geometries
-	 *
-	 * @param first
-	 * @param second
-	 * @return
-	 */
-	@JsIgnore
-	public static Geometry difference(@NotNull Geometry first, @NotNull Geometry second) {
-		return first.difference(second);
-	}
-
-	/**
 	 * creates the intersection {@link Geometry} of the passed geometries
 	 *
 	 * @param first
@@ -368,6 +365,7 @@ public class JSTSFactory {
 	 * @param list
 	 * @param polygon
 	 */
+	@JsIgnore
 	private static void addHoles(@NotNull List<Geometry> list, @NotNull Polygon polygon) {
 		for (int i = 0; i < polygon.getNumInteriorRing(); i++) {
 			LineString hole = polygon.getInteriorRingN(i);
@@ -381,7 +379,9 @@ public class JSTSFactory {
 	 *
 	 * @param lineString
 	 * @return
+	 * 
 	 */
+	@JsIgnore
 	private static Geometry getHole(@NotNull LineString lineString) {
 		return getSingleGeomFactory().createPolygon(lineString.getCoordinateSequence());
 	}
@@ -444,29 +444,11 @@ public class JSTSFactory {
 		return newGeom;
 	}
 
-	/**
-	 * 
-	 * adds the passed hole to the geom
-	 *
-	 * @param geom
-	 * @param hole
-	 * @return
-	 */
-
-	@JsMethod
-	public static Geometry addHole(@NotNull Geometry geom, @NotNull Geometry hole) {
-		return JSTSFactory.difference(geom, hole);
-	}
-
 	@JsMethod
 	public static Geometry union(@NotNull Geometry geometry, @NotNull Geometry... geoms) {
 		Geometry all = geometry.copy();
 		for (Geometry geom : geoms) {
-			if (geom == null)
-				continue;
-			if (all == null)
-				all = geom;
-			else
+			if (geom != null)
 				all = all.union(geom);
 		}
 		return all.buffer(0);
@@ -486,7 +468,7 @@ public class JSTSFactory {
 			if (geom == null)
 				continue;
 			if (all == null)
-				all = geom;
+				all = geom.copy();
 			else
 				all = all.union(geom);
 		}
@@ -497,14 +479,24 @@ public class JSTSFactory {
 	public static Geometry difference(@NotNull Geometry geometry, @NotNull Geometry... geoms) {
 		Geometry all = geometry.copy();
 		for (Geometry geom : geoms) {
-			if (geom == null)
-				continue;
-			if (all == null)
-				all = geom;
-			else
+			if (geom != null)
 				all = all.difference(geom);
 		}
 		return all.buffer(0);
+	}
+
+	/**
+	 * 
+	 * adds the passed hole to the geom
+	 *
+	 * @param geometry
+	 * @param hole
+	 * @return
+	 */
+
+	@JsMethod
+	public static Geometry addHole(@NotNull Geometry geometry, @NotNull Geometry hole) {
+		return geometry.difference(hole);
 	}
 
 	/**
@@ -521,7 +513,7 @@ public class JSTSFactory {
 			if (geom == null)
 				continue;
 			if (all == null)
-				all = geom;
+				all = geom.copy();
 			else
 				all = all.difference(geom);
 		}
@@ -532,11 +524,7 @@ public class JSTSFactory {
 	public static Geometry intersect(@NotNull Geometry geometry, Geometry... geoms) {
 		Geometry all = geometry.copy();
 		for (Geometry geom : geoms) {
-			if (geom == null)
-				continue;
-			if (all == null)
-				all = geom;
-			else
+			if (geom != null)
 				all = all.intersection(geom);
 		}
 		return all.buffer(0);
@@ -556,7 +544,7 @@ public class JSTSFactory {
 			if (geom == null)
 				continue;
 			if (all == null)
-				all = geom;
+				all = geom.copy();
 			else
 				all = all.intersection(geom);
 		}
@@ -604,6 +592,10 @@ public class JSTSFactory {
 	@JsMethod
 	public static <G extends Geometry> G fromWKT(@NotNull String wkt) {
 		return (G) JSTSFactory.getWKTReader().read(wkt);
+	}
+
+	public static String toWKT(@NotNull Geometry geom) {
+		return JSTSFactory.getWKTWriter().write(geom);
 	}
 
 	@JsMethod

@@ -116,4 +116,42 @@ public class JSTSFactoryTest extends GwtJSTSTestCase {
 		assertEquals(geomABCD, actual);
 		assertTrue(JSTSFactory.isMultiPart(actual));
 	}
+
+	@Test
+	public void testIntersects() {
+		Geometry geomA = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_A);
+		Geometry geomB = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_B);
+		assertNotNull(geomA);
+		assertNotNull(geomB);
+
+		assertTrue(JSTSFactory.intersects(geomA, geomB, 0));
+	}
+
+	@Test
+	public void testDifference() {
+		Geometry geomA = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_A);
+		Geometry geomC = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_C);
+		Geometry geomAC = JSTSFactory
+				.fromWKT("POLYGON ((260 250, 810 250, 810 50, 260 50, 260 250), (460 90, 580 90, 580 190, 460 190, 460 90))");
+		assertNotNull(geomA);
+		assertNotNull(geomC);
+		assertNotNull(geomAC);
+
+		Geometry actual = JSTSFactory.difference(geomA, geomC);
+		assertEquals(geomAC, actual);
+	}
+
+	@Test
+	public void testAddHole() {
+		Geometry geomA = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_A);
+		Geometry geomC = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_C);
+		Geometry geomAC = JSTSFactory
+				.fromWKT("POLYGON ((260 250, 810 250, 810 50, 260 50, 260 250), (460 90, 580 90, 580 190, 460 190, 460 90))");
+		assertNotNull(geomA);
+		assertNotNull(geomC);
+		assertNotNull(geomAC);
+
+		Geometry actual = JSTSFactory.addHole(geomA, geomC);
+		assertEquals(geomAC, actual);
+	}
 }
