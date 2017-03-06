@@ -68,6 +68,16 @@ public class JSTSFactoryTest extends GwtJSTSTestCase {
 	}
 
 	@Test
+	public void testIsMultipart() {
+		Geometry geomAB = JSTSFactory
+				.fromWKT("POLYGON ((260 250, 390 250, 390 400, 680 400, 680 250, 810 250, 810 50, 260 50, 260 250))");
+		assertNotNull(geomAB);
+
+		boolean isMultipart = JSTSFactory.isMultiPart(geomAB);
+		assertFalse(isMultipart);
+	}
+
+	@Test
 	public void testUnion() {
 		Geometry geomA = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_A);
 		Geometry geomB = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_B);
