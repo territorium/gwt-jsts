@@ -4,17 +4,18 @@
 <module>
 	<!-- Inherit the core Web Toolkit stuff. -->
 	<inherits name="com.google.gwt.core.Core" />
-  <inherits name="com.google.gwt.logging.Logging"/>
+	<inherits name="com.google.gwt.logging.Logging" />
 
 	<!-- GWT-OL3 Wrapper -->
 	<inherits name="ol.GwtOL3" />
 
-  <!-- Territorium Online's GWT-Elemental API used for converting Java Arrays and Map's to JavaScript -->
-  <inherits name="tol.j2cl.elem.Elemental" />
-  
-  <!-- Specify the entry point class. -->
-  <entry-point class="jsts.GwtJSTS" />
-  
+	<!-- Territorium Online's GWT-Elemental API used for converting Java Arrays 
+		and Map's to JavaScript -->
+	<inherits name="tol.j2cl.elem.Elemental" />
+
+	<!-- Specify the entry point class. -->
+	<entry-point class="jsts.GwtJSTS" />
+
 	<!-- Specify the paths for translatable code -->
 	<source path="" />
 </module>
