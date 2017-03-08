@@ -53,6 +53,17 @@ public class GeometryFactory {
 	@JsConstructor
 	public GeometryFactory(PrecisionModel precisionModel) {};
 
+	/**
+	 * Constructs a(n) {@link GeometryFactory} that generates Geometries having
+	 * the given PrecisionModel and spatial-reference ID, and the default
+	 * CoordinateSequence implementation..
+	 *
+	 * @param precisionModel
+	 * @param SRID
+	 */
+	@JsConstructor
+	public GeometryFactory(PrecisionModel precisionModel, int SRID) {};
+
 	public native Geometry toGeometry(Envelope envelope);
 
 	public native Geometry[] toGeometryArray(ArrayList<Geometry> geometries);
