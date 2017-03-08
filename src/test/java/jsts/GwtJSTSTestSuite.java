@@ -54,7 +54,7 @@ public class GwtJSTSTestSuite extends GWTTestSuite {
 	 * @return
 	 */
 	public static TestSuite suite() {
-		TestSuite suite = new TestSuite("Tests for GwtJSTS-Wrapper");
+		final TestSuite suite = new TestSuite("Tests for GwtJSTS-Wrapper");
 
 		suite.addTestSuite(CoordinateListTest.class);
 		suite.addTestSuite(CoordinateTest.class);
@@ -63,6 +63,7 @@ public class GwtJSTSTestSuite extends GWTTestSuite {
 		suite.addTestSuite(PolygonTest.class);
 		suite.addTestSuite(GeometryFactoryTest.class);
 		suite.addTestSuite(JSTSFactoryTest.class);
+		suite.addTestSuite(JSTSUtilTest.class);
 		suite.addTestSuite(OL3ParserTest.class);
 		return suite;
 	}

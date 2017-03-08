@@ -21,6 +21,7 @@ import org.junit.Test;
 
 import jsts.GwtJSTSTestCase;
 import jsts.JSTSFactory;
+import jsts.JSTSUtil;
 import jsts.geom.Geometry;
 import jsts.geom.Polygon;
 
@@ -47,25 +48,25 @@ public class OL3ParserTest extends GwtJSTSTestCase {
 	@Test
 	public void testCreateOL3Parser() {
 		inject();
-		OL3Parser parser = new OL3Parser();
+		final OL3Parser parser = new OL3Parser();
 		assertNotNull(parser);
 	}
 
 	@Test
 	public void testWriteGeometry() {
 		inject();
-		OL3Parser parser = new OL3Parser();
+		final OL3Parser parser = new OL3Parser();
 		assertNotNull(parser);
 
-		Geometry geometry = JSTSFactory.fromWKT(GwtJSTSTestCase.POLYGON_A);
+		final Geometry geometry = JSTSUtil.fromWKT(GwtJSTSTestCase.POLYGON_A);
 		assertNotNull(geometry);
-		Polygon jtsPolygon = JSTSFactory.cast(geometry);
+		final Polygon jtsPolygon = JSTSFactory.cast(geometry);
 
-		ol.geom.Geometry olGeom = parser.write(jtsPolygon);
+		final ol.geom.Geometry olGeom = parser.write(jtsPolygon);
 		assertNotNull(olGeom);
 		assertTrue(olGeom instanceof ol.geom.Polygon);
 
-		ol.geom.Polygon ol3Polygon = (ol.geom.Polygon) olGeom;
+		final ol.geom.Polygon ol3Polygon = (ol.geom.Polygon) olGeom;
 		assertTrue(jtsPolygon.getCoordinates().length == ol3Polygon.getCoordinates()[0].length);
 	}
 }
