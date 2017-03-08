@@ -37,22 +37,14 @@ import tol.j2cl.elem.global.Array;
  */
 public class GeometryFactoryTest extends GwtJSTSTestCase {
 
-	private Coordinate[] createPolygonCoordinates() {
-		return new Coordinate[] {
-				new Coordinate(260, 250), new Coordinate(810, 250), new Coordinate(810, 50), new Coordinate(260, 50),
-				new Coordinate(260, 250) };
-	}
-
 	@Test
 	public void testCreateGeometryFactory() {
-		inject();
 		final GeometryFactory geometryFactory = createGeometryFactory();
 		assertNotNull(geometryFactory);
 	}
 
 	@Test
 	public void testGetCoordinateSequenceFactory() {
-		inject();
 		final GeometryFactory geometryFactory = createGeometryFactory();
 		assertNotNull(geometryFactory);
 
@@ -62,7 +54,6 @@ public class GeometryFactoryTest extends GwtJSTSTestCase {
 
 	@Test
 	public void testCreateEmptyCoordinateSequence() {
-		inject();
 		final GeometryFactory geometryFactory = createGeometryFactory();
 		assertNotNull(geometryFactory);
 
@@ -78,7 +69,6 @@ public class GeometryFactoryTest extends GwtJSTSTestCase {
 
 	@Test
 	public void testCreateCoordinateSequence() {
-		inject();
 		final GeometryFactory geometryFactory = createGeometryFactory();
 		assertNotNull(geometryFactory);
 
@@ -96,7 +86,6 @@ public class GeometryFactoryTest extends GwtJSTSTestCase {
 
 	@Test
 	public void testCreateCoordinateArraySequence() {
-		inject();
 		final GeometryFactory geometryFactory = createGeometryFactory();
 		assertNotNull(geometryFactory);
 
@@ -115,8 +104,17 @@ public class GeometryFactoryTest extends GwtJSTSTestCase {
 	}
 
 	@Test
+	public void testCreateLineString() {
+		final GeometryFactory geometryFactory = createGeometryFactory();
+		assertNotNull(geometryFactory);
+
+		final LineString lineString = geometryFactory.createLineString(new Coordinate(260, 250), new Coordinate(810, 250));
+		assertNotNull(lineString);
+		assertTrue(lineString.getCoordinates().length == 2);
+	}
+
+	@Test
 	public void testCreateLinearRing() {
-		inject();
 		final GeometryFactory geometryFactory = createGeometryFactory();
 		assertNotNull(geometryFactory);
 
@@ -127,7 +125,6 @@ public class GeometryFactoryTest extends GwtJSTSTestCase {
 
 	@Test
 	public void testCreateEmptyPolygon() {
-		inject();
 		final GeometryFactory geometryFactory = createGeometryFactory();
 		assertNotNull(geometryFactory);
 		final Polygon polygon = geometryFactory.createPolygon();
@@ -136,7 +133,6 @@ public class GeometryFactoryTest extends GwtJSTSTestCase {
 
 	@Test
 	public void testCreatePolygonFromArray() {
-		inject();
 		final GeometryFactory geometryFactory = createGeometryFactory();
 		assertNotNull(geometryFactory);
 
@@ -147,7 +143,6 @@ public class GeometryFactoryTest extends GwtJSTSTestCase {
 
 	@Test
 	public void testCreatePolygonFromCoordinateSequence() {
-		inject();
 		final GeometryFactory geometryFactory = createGeometryFactory();
 		assertNotNull(geometryFactory);
 
@@ -166,7 +161,6 @@ public class GeometryFactoryTest extends GwtJSTSTestCase {
 
 	@Test
 	public void testCreatePolygonFromLinearRing() {
-		inject();
 		final GeometryFactory geometryFactory = createGeometryFactory();
 		assertNotNull(geometryFactory);
 
@@ -181,7 +175,6 @@ public class GeometryFactoryTest extends GwtJSTSTestCase {
 
 	@Test
 	public void testSRID() {
-		inject();
 		final GeometryFactory geometryFactory = createGeometryFactory(25832);
 		assertNotNull(geometryFactory);
 

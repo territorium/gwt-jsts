@@ -11,7 +11,7 @@
  * NON-INFRINGEMENT. Please see the License for the specific language governing rights and limitations under the
  * License.
  */
-package jsts;
+package jsts.geom;
 
 import java.util.ArrayList;
 
@@ -19,14 +19,13 @@ import javax.validation.constraints.NotNull;
 
 import org.junit.Test;
 
-import jsts.geom.Geometry;
-import jsts.geom.LineString;
-import jsts.geom.Polygon;
+import jsts.GwtJSTSTestCase;
+import jsts.JSTSFactory;
 
 /**
  *
  * <p>
- * The <code>JSTSUtilTest</code> is a test case for {@link JSTSUtil}
+ * The <code>JSTSUtilTest</code> is a test case for {@link GeometryUtil}
  * </p>
  * <p>
  * Copyright: 2003 - 2017 <a href="http://www.teritoriumonline.com">Territorium Online Srl.</a>
@@ -40,7 +39,7 @@ import jsts.geom.Polygon;
  * @version 1.0,07.03.2017
  * @since 1.0.
  */
-public class JSTSUtilTest extends GwtJSTSTestCase {
+public class GeometryUtilTest extends GwtJSTSTestCase {
 
 	private static final String	SIMPLE_POLYGON_TO_SPLIT		= "POLYGON ((260 50, 260 420, 810 420, 810 50, 260 50))";
 	private static final String	SIMPLE_SPLIT_POLYGON1			= "POLYGON ((260 250, 810 250, 810 50, 260 50, 260 250))";
@@ -66,8 +65,14 @@ public class JSTSUtilTest extends GwtJSTSTestCase {
 	@Override
 	public void gwtSetUp() throws Exception {
 		super.gwtSetUp();
-		inject();
-		JSTSUtil.init(25832);
+		GeometryUtil.init(25832);
+	}
+
+	@Test
+	public void testCreatePolygon() {
+		final Coordinate coordinates[] = createPolygonCoordinates();
+		final Polygon polygon = GeometryUtil.createPolygon(coordinates);
+		assertNotNull(polygon);
 	}
 
 	@Test
@@ -76,7 +81,7 @@ public class JSTSUtilTest extends GwtJSTSTestCase {
 				"POLYGON ((260 250, 390 250, 390 400, 680 400, 680 250, 810 250, 810 50, 260 50, 260 250))");
 		assertNotNull(geomAB);
 
-		final boolean isMultipart = JSTSUtil.isMultiPart(geomAB);
+		final boolean isMultipart = GeometryUtil.isMultiPart(geomAB);
 		assertFalse(isMultipart);
 	}
 
@@ -90,7 +95,7 @@ public class JSTSUtilTest extends GwtJSTSTestCase {
 		assertNotNull(geomB);
 		assertNotNull(geomAB);
 
-		final Geometry actual = JSTSUtil.union(geomA, geomB);
+		final Geometry actual = GeometryUtil.union(geomA, geomB);
 		assertEquals(geomAB, actual);
 	}
 
@@ -115,19 +120,19 @@ public class JSTSUtilTest extends GwtJSTSTestCase {
 		final Geometry[] geomArray = new Geometry[4];
 		geoms.add(geomB);
 
-		Geometry actual = JSTSUtil.union(geomA, geoms.toArray(geomArray));
+		Geometry actual = GeometryUtil.union(geomA, geoms.toArray(geomArray));
 		assertEquals(geomAB, actual);
-		assertFalse(JSTSUtil.isMultiPart(actual));
+		assertFalse(GeometryUtil.isMultiPart(actual));
 
 		geoms.add(geomC);
-		actual = JSTSUtil.union(geomA, geoms.toArray(geomArray));
+		actual = GeometryUtil.union(geomA, geoms.toArray(geomArray));
 		assertEquals(geomAB, actual);
-		assertFalse(JSTSUtil.isMultiPart(actual));
+		assertFalse(GeometryUtil.isMultiPart(actual));
 
 		geoms.add(geomD);
-		actual = JSTSUtil.union(geomA, geoms.toArray(geomArray));
+		actual = GeometryUtil.union(geomA, geoms.toArray(geomArray));
 		assertEquals(geomABCD, actual);
-		assertTrue(JSTSUtil.isMultiPart(actual));
+		assertTrue(GeometryUtil.isMultiPart(actual));
 	}
 
 	@Test
@@ -137,7 +142,7 @@ public class JSTSUtilTest extends GwtJSTSTestCase {
 		assertNotNull(geomA);
 		assertNotNull(geomB);
 
-		assertTrue(JSTSUtil.intersects(geomA, geomB, 0));
+		assertTrue(GeometryUtil.intersects(geomA, geomB, 0));
 	}
 
 	@Test
@@ -150,7 +155,7 @@ public class JSTSUtilTest extends GwtJSTSTestCase {
 		assertNotNull(geomC);
 		assertNotNull(geomAC);
 
-		final Geometry actual = JSTSUtil.difference(geomA, geomC);
+		final Geometry actual = GeometryUtil.difference(geomA, geomC);
 		assertEquals(geomAC, actual);
 	}
 
@@ -165,7 +170,7 @@ public class JSTSUtilTest extends GwtJSTSTestCase {
 		assertNotNull(geomC);
 		assertNotNull(geomAC);
 
-		final Geometry actual = JSTSUtil.addHole(geomA, geomC);
+		final Geometry actual = GeometryUtil.addHole(geomA, geomC);
 		assertEquals(geomAC, actual);
 	}
 
@@ -176,8 +181,8 @@ public class JSTSUtilTest extends GwtJSTSTestCase {
 		assertNotNull(validLine);
 		assertNotNull(invalidLine);
 
-		assertFalse(JSTSUtil.isLineSelfIntersecting(validLine));
-		assertTrue(JSTSUtil.isLineSelfIntersecting(invalidLine));
+		assertFalse(GeometryUtil.isLineSelfIntersecting(validLine));
+		assertTrue(GeometryUtil.isLineSelfIntersecting(invalidLine));
 	}
 
 }

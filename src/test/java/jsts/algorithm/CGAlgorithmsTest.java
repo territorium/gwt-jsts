@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2001-2016 Territorium Online Srl. All Rights Reserved.
+ * Copyright (c) 2001-2017 Territorium Online Srl. All Rights Reserved.
  * 
  * This file contains Original Code and/or Modifications of Original Code as defined in and that are subject to the
  * Territorium Online License Version 1.0. You may not use this file except in compliance with the License. Please
@@ -11,50 +11,35 @@
  * NON-INFRINGEMENT. Please see the License for the specific language governing rights and limitations under the
  * License.
  */
-package jsts;
-
-import javax.validation.constraints.NotNull;
+package jsts.algorithm;
 
 import org.junit.Test;
 
+import jsts.GwtJSTSTestCase;
 import jsts.geom.Coordinate;
-import jsts.geom.Geometry;
-import jsts.geom.Polygon;
 
 /**
  *
  * <p>
- * The <code>JSTSFactoryTest</code> is a test case for {@link JSTSFactory}
+ * The <code>CGAlgorithmsTest</code> class
  * </p>
  * <p>
- * Copyright: 2003 - 2016 <a href="http://www.teritoriumonline.com">Territorium Online Srl.</a>
+ * Copyright: 2003 - 2017 <a href="http://www.teritoriumonline.com">Territorium Online Srl.</a>
  * </p>
  * <p>
  * Via Buozzi 12, 39100 Bolzano, Italy.
  * </p>
  * <p>
  * </p>
- * @author <a href="mailto:mapaccel@teritoriumonline.com">Peter Zanetti</a>.
- * @version 1.0.0,26.11.2016
- * @since 1.0.0
+ * @author <a href="mailto:development@tol.info">Peter Zanetti</a>.
+ * @version 4.0,08.03.2017
+ * @since 4.0.
  */
-public class JSTSFactoryTest extends GwtJSTSTestCase {
-
-	private <G extends Geometry> G fromWKT(@NotNull String wkt) {
-		return JSTSFactory.getInstance().fromWKT(wkt);
-	}
+public class CGAlgorithmsTest extends GwtJSTSTestCase {
 
 	@Test
-	public void testCreatePolygonFromWKT() {
-		final Polygon geometry = fromWKT(GwtJSTSTestCase.POLYGON_A);
-		assertNotNull(geometry);
+	public void testIsCCW() {
+		final Coordinate ring[] = createPolygonCoordinates();
+		assertFalse(CGAlgorithms.isCCW(ring));
 	}
-
-	@Test
-	public void testCreatePolygon() {
-		final Coordinate coordinates[] = createPolygonCoordinates();
-		final Polygon polygon = JSTSFactory.getInstance().createPolygon(coordinates);
-		assertNotNull(polygon);
-	}
-
 }

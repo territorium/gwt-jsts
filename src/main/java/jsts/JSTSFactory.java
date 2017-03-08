@@ -1,18 +1,14 @@
 /*
  * Copyright (c) 2001-2016 Territorium Online Srl. All Rights Reserved.
  *
- * This file contains Original Code and/or Modifications of Original Code as
- * defined in and that are subject to the Territorium Online License Version
- * 1.0. You may not use this file except in compliance with the License. Please
- * obtain a copy of the License at http://www.tol.info/license/ and read it
- * before using this file.
+ * This file contains Original Code and/or Modifications of Original Code as defined in and that are subject to the
+ * Territorium Online License Version 1.0. You may not use this file except in compliance with the License. Please
+ * obtain a copy of the License at http://www.tol.info/license/ and read it before using this file.
  *
- * The Original Code and all software distributed under the License are
- * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS
- * OR IMPLIED, AND TERRITORIUM ONLINE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
- * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR
- * A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT. Please see the
- * License for the specific language governing rights and limitations under the
+ * The Original Code and all software distributed under the License are distributed on an 'AS IS' basis, WITHOUT
+ * WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, AND TERRITORIUM ONLINE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
+ * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR
+ * NON-INFRINGEMENT. Please see the License for the specific language governing rights and limitations under the
  * License.
  */
 package jsts;
@@ -30,7 +26,6 @@ import jsinterop.annotations.JsType;
 import jsts.algorithm.CGAlgorithms;
 import jsts.geom.Coordinate;
 import jsts.geom.CoordinateSequence;
-import jsts.geom.CoordinateSequenceFactory;
 import jsts.geom.Geometry;
 import jsts.geom.GeometryCollection;
 import jsts.geom.GeometryFactory;
@@ -48,12 +43,11 @@ import jsts.operation.polygonize.Polygonizer;
 /**
  *
  * <p>
- * The <code>JSTSFactory</code> class represents a factory for the
- * generation/instantiation of objects from the <code>jsts.geom</code> package
+ * The <code>JSTSFactory</code> class represents a factory for the generation/instantiation of objects from the
+ * <code>jsts.geom</code> package
  * </p>
  * <p>
- * Copyright: 2003 - 2016 <a href="http://www.teritoriumonline.com">Territorium
- * Online Srl.</a>
+ * Copyright: 2003 - 2016 <a href="http://www.teritoriumonline.com">Territorium Online Srl.</a>
  * </p>
  * <p>
  * Via Buozzi 12, 39100 Bolzano, Italy.
@@ -70,16 +64,12 @@ public class JSTSFactory {
 	public final static String		DEFAULT_CS	= " ";
 	public final static String		DEFAULT_TS	= ";";
 
-	// workaround, not working when used multiple times????
 	private final GeometryFactory	geometryFactory;
-	private static JSTSFactory		INSTANCE;
 
 	@JsMethod
 	public static JSTSFactory getInstance() {
-		if (INSTANCE == null) {
-			INSTANCE = new JSTSFactory();
-		}
-		return INSTANCE;
+		// IMPORTANT: not working when used multiple times!!!
+		return new JSTSFactory();
 	}
 
 	/**
@@ -93,8 +83,7 @@ public class JSTSFactory {
 	}
 
 	/**
-	 * Constructs a(n) {@link JSTSFactory} object with
-	 * {@link PrecisionModel#FLOATING}
+	 * Constructs a(n) {@link JSTSFactory} object with {@link PrecisionModel#FLOATING}
 	 *
 	 */
 	@JsIgnore
@@ -128,25 +117,17 @@ public class JSTSFactory {
 	}
 
 	@JsMethod
-	public LinearRing createLinearRing() {
-		final Coordinate[] coords = new Coordinate[] {
-				new Coordinate(260, 250), new Coordinate(810, 250), new Coordinate(810, 50), new Coordinate(260, 50),
-				new Coordinate(260, 250) };
-		final CoordinateSequenceFactory coordSeqFactory = geometryFactory.getCoordinateSequenceFactory();
-		final CoordinateSequence coordSeq = coordSeqFactory.create(coords);
-		final LinearRing linearRing = new LinearRing(coordSeq, geometryFactory);
-		return linearRing;
+	public static Coordinate createCoordinate(ol.Coordinate coord) {
+		return new Coordinate(coord.getX(), coord.getY(), coord.getZ());
 	}
 
 	/**
 	 * <p>
-	 * Creates a <code>Polygon</code> from the given coordinates considering
-	 * holes.
+	 * Creates a <code>Polygon</code> from the given coordinates considering holes.
 	 * </p>
 	 * <p>
-	 * <b>IMPORTANT:</b>In case of a Polygon it follows the ArcSDE, Oracle Spatial
-	 * specification and not those of Shapefiles. That means that the orientation
-	 * of the exterior ring of a polygon is counterclockwise!!
+	 * <b>IMPORTANT:</b>In case of a Polygon it follows the ArcSDE, Oracle Spatial specification and not those of
+	 * Shapefiles. That means that the orientation of the exterior ring of a polygon is counterclockwise!!
 	 * </p>
 	 * 
 	 * @param coordinates the array of <code>Coordinate</code>
@@ -156,7 +137,7 @@ public class JSTSFactory {
 	public Polygon createPolygon(@NotNull Coordinate[] coordinates) {
 
 		// Isolate coordinates which forms a ring
-		final ArrayList<Coordinate[]> coordListArray = new ArrayList<Coordinate[]>();
+		final ArrayList<Coordinate[]> coordList = new ArrayList<Coordinate[]>();
 		// CoordinateList coordList = new CoordinateList();
 		Coordinate coord;
 		Coordinate firstCoord = coordinates[0];
@@ -167,11 +148,11 @@ public class JSTSFactory {
 			if (i > start && coord.equals2D(firstCoord)) {
 				size = i - start + 1;
 				// Create new coordinate array
-				final Coordinate[] coordList = new Coordinate[size];
+				final Coordinate[] coords = new Coordinate[size];
 				// Copy coordinates
-				System.arraycopy(coordinates, start, coordList, 0, size);
+				System.arraycopy(coordinates, start, coords, 0, size);
 				// Add coordinates to array
-				coordListArray.add(coordList);
+				coordList.add(coords);
 				// Reset start point and start coordinate
 				start = i + 1;
 				if (start < coordinates.length) {
@@ -182,11 +163,11 @@ public class JSTSFactory {
 
 		LinearRing[] holes = null;
 		LinearRing shell = null;
-		if (coordListArray.size() > 1) {
+		if (coordList.size() > 1) {
 			// Test if the ring is a hole or not
-			final List<LinearRing> holeList = new ArrayList<LinearRing>(coordListArray.size() - 1);
-			for (int i = 0; i < coordListArray.size(); i++) {
-				final Coordinate[] coords = coordListArray.get(i);
+			final List<LinearRing> holeList = new ArrayList<LinearRing>(coordList.size() - 1);
+			for (int i = 0; i < coordList.size(); i++) {
+				final Coordinate[] coords = coordList.get(i);
 				final LinearRing ring = geometryFactory.createLinearRing(coords);
 				if (CGAlgorithms.isCCW(coords)) {
 					holeList.add(ring);
@@ -200,7 +181,7 @@ public class JSTSFactory {
 			holes = new LinearRing[holeList.size()];
 			holeList.toArray(holes);
 		} else {
-			final Coordinate[] coords = coordListArray.get(0);
+			final Coordinate[] coords = coordList.get(0);
 			if (CGAlgorithms.isCCW(coords)) {
 				// Maybe an error. We invert orientation
 				shell = createInvertedLinearRing(coords);
@@ -213,8 +194,8 @@ public class JSTSFactory {
 
 	/**
 	 * <p>
-	 * Gets the outher shell of a {@link List} of CCW {@link LinearRing}'s
-	 * representing holes and removes the shell from the holeList.
+	 * Gets the outher shell of a {@link List} of CCW {@link LinearRing}'s representing holes and removes the shell from
+	 * the holeList.
 	 * </p>
 	 * 
 	 * @param holeList

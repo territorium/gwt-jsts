@@ -24,7 +24,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 import jsts.geom.Coordinate;
 import jsts.geom.CoordinateList;
+import jsts.geom.CoordinateSequence;
+import jsts.geom.CoordinateSequenceFactory;
 import jsts.geom.GeometryFactory;
+import jsts.geom.LinearRing;
 import jsts.geom.PrecisionModel;
 import tol.j2cl.elem.global.Array;
 
@@ -83,9 +86,10 @@ public class GwtJSTSTestCase extends GWTTestCase {
 		for (int i = 0, n = toRemove.size(); i < n; ++i) {
 			DOM.removeChild(bodyElem, toRemove.get(i));
 		}
+		inject();
 	}
 
-	protected final void inject() {
+	private final void inject() {
 		// Start loading the library.
 		ScriptInjector.fromString(JsResLoader.getJsRes().jsts().getText()).setWindow(ScriptInjector.TOP_WINDOW).inject();
 		// ScriptInjector.fromString(JsResLoader.getJsRes().jstsMin().getText()).setWindow(ScriptInjector.TOP_WINDOW).inject();
@@ -116,5 +120,22 @@ public class GwtJSTSTestCase extends GWTTestCase {
 			coordList.add(coord);
 		}
 		return coordList;
+	}
+
+	protected Coordinate[] createPolygonCoordinates() {
+		return new Coordinate[] {
+				new Coordinate(260, 250), new Coordinate(810, 250), new Coordinate(810, 50), new Coordinate(260, 50),
+				new Coordinate(260, 250) };
+	}
+
+	protected LinearRing createLinearRing() {
+		final GeometryFactory geometryFactory = createGeometryFactory();
+		final Coordinate[] coords = new Coordinate[] {
+				new Coordinate(260, 250), new Coordinate(810, 250), new Coordinate(810, 50), new Coordinate(260, 50),
+				new Coordinate(260, 250) };
+		final CoordinateSequenceFactory coordSeqFactory = geometryFactory.getCoordinateSequenceFactory();
+		final CoordinateSequence coordSeq = coordSeqFactory.create(coords);
+		final LinearRing linearRing = new LinearRing(coordSeq, geometryFactory);
+		return linearRing;
 	}
 }

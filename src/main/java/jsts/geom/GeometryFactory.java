@@ -1,18 +1,14 @@
 /*
  * Copyright (c) 2001-2016 Territorium Online Srl. All Rights Reserved.
  *
- * This file contains Original Code and/or Modifications of Original Code as
- * defined in and that are subject to the Territorium Online License Version
- * 1.0. You may not use this file except in compliance with the License. Please
- * obtain a copy of the License at http://www.tol.info/license/ and read it
- * before using this file.
+ * This file contains Original Code and/or Modifications of Original Code as defined in and that are subject to the
+ * Territorium Online License Version 1.0. You may not use this file except in compliance with the License. Please
+ * obtain a copy of the License at http://www.tol.info/license/ and read it before using this file.
  *
- * The Original Code and all software distributed under the License are
- * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS
- * OR IMPLIED, AND TERRITORIUM ONLINE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
- * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR
- * A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT. Please see the
- * License for the specific language governing rights and limitations under the
+ * The Original Code and all software distributed under the License are distributed on an 'AS IS' basis, WITHOUT
+ * WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, AND TERRITORIUM ONLINE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
+ * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR
+ * NON-INFRINGEMENT. Please see the License for the specific language governing rights and limitations under the
  * License.
  */
 package jsts.geom;
@@ -25,19 +21,17 @@ import jsinterop.annotations.JsType;
 import tol.j2cl.elem.global.Array;
 
 /**
- * Supplies a set of utility methods for building Geometry objects from lists of
- * Coordinates. Note that the factory constructor methods do not change the
- * input coordinates in any way. In particular, they are not rounded to the
- * supplied PrecisionModel. It is assumed that input Coordinates meet the given
- * precision.
+ * Supplies a set of utility methods for building Geometry objects from lists of Coordinates. Note that the factory
+ * constructor methods do not change the input coordinates in any way. In particular, they are not rounded to the
+ * supplied PrecisionModel. It is assumed that input Coordinates meet the given precision.
  */
 @JsType(isNative = true)
 public class GeometryFactory {
 
 	/**
 	 * 
-	 * Constructs a GeometryFactory that generates Geometries having a floating
-	 * PrecisionModel and a spatial-reference ID of 0.
+	 * Constructs a GeometryFactory that generates Geometries having a floating PrecisionModel and a spatial-reference ID
+	 * of 0.
 	 *
 	 */
 	@JsConstructor
@@ -45,8 +39,8 @@ public class GeometryFactory {
 
 	/**
 	 * 
-	 * Constructs a GeometryFactory that generates Geometries having the given
-	 * PrecisionModel and the default CoordinateSequence implementation.
+	 * Constructs a GeometryFactory that generates Geometries having the given PrecisionModel and the default
+	 * CoordinateSequence implementation.
 	 *
 	 * @param precisionModel
 	 */
@@ -54,9 +48,8 @@ public class GeometryFactory {
 	public GeometryFactory(PrecisionModel precisionModel) {};
 
 	/**
-	 * Constructs a(n) {@link GeometryFactory} that generates Geometries having
-	 * the given PrecisionModel and spatial-reference ID, and the default
-	 * CoordinateSequence implementation..
+	 * Constructs a(n) {@link GeometryFactory} that generates Geometries having the given PrecisionModel and
+	 * spatial-reference ID, and the default CoordinateSequence implementation..
 	 *
 	 * @param precisionModel
 	 * @param SRID
@@ -102,7 +95,7 @@ public class GeometryFactory {
 	public native LineString createLineString(Array<Coordinate> coordinates);
 
 	@JsOverlay
-	public final LineString createLineString(Coordinate[] coordinates) {
+	public final LineString createLineString(Coordinate... coordinates) {
 		return createLineString(Array.of(coordinates));
 	}
 

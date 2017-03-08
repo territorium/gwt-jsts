@@ -11,7 +11,7 @@
  * NON-INFRINGEMENT. Please see the License for the specific language governing rights and limitations under the
  * License.
  */
-package jsts;
+package jsts.geom;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,17 +21,8 @@ import javax.validation.constraints.NotNull;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsType;
-import jsts.geom.Geometry;
-import jsts.geom.GeometryCollection;
-import jsts.geom.GeometryFactory;
-import jsts.geom.LineString;
-import jsts.geom.LinearRing;
-import jsts.geom.MultiLineString;
-import jsts.geom.MultiPoint;
-import jsts.geom.MultiPolygon;
-import jsts.geom.Point;
-import jsts.geom.Polygon;
-import jsts.geom.PrecisionModel;
+import jsts.JSTSFactory;
+import jsts.JsAPI;
 import jsts.io.WKTReader;
 import jsts.io.WKTWriter;
 import jsts.operation.IsSimpleOp;
@@ -40,7 +31,7 @@ import ol.Coordinate;
 /**
  *
  * <p>
- * The <code>JSTSUtil</code> contains useful methods for spatial operations and tests. In addition it exposes all
+ * The <code>GeometryUtil</code> contains useful methods for spatial operations and tests. In addition it exposes all
  * methods of the {@link JSTSFactory} in an static way using a certain precision. The default precision is <b>0.001d</b>
  * </p>
  * <p>
@@ -55,49 +46,50 @@ import ol.Coordinate;
  * @version 1.0,07.03.2017
  * @since 1.0.
  */
-@JsType(name = "JSTSUtil", namespace = JsAPI.NS)
-public class JSTSUtil {
+@JsType(name = "GeometryUtil", namespace = JsAPI.NS)
+public class GeometryUtil {
 
-	public static double				PRECISION	= 0.001d;
-	private static JSTSFactory	JSTS_FACTORY;
+	public final static double	DEFAULT_PRECISION	= 0.001d;
+	private static double				PRECISION					= DEFAULT_PRECISION;
+	private static int					SRID							= 0;
+	// private static JSTSFactory JSTS_FACTORY;
 
 	@JsIgnore
 	public static JSTSFactory getJSTSFactory() {
-		if (JSTS_FACTORY == null) {
-			init(PRECISION);
-		}
-		return JSTS_FACTORY;
+		// IMPORTANT: not working when used multiple times!!!
+		return new JSTSFactory(new GeometryFactory(new PrecisionModel(PRECISION), SRID));
 	}
 
 	/**
-	 * Inits this {@link JSTSUtil} with the given precision
+	 * Inits this {@link GeometryUtil} with the given precision
 	 *
 	 * @param precision
 	 */
 	@JsIgnore
 	public static void init(double precision) {
-		JSTS_FACTORY = new JSTSFactory(new GeometryFactory(new PrecisionModel(precision)));
+		GeometryUtil.PRECISION = precision;
 	}
 
 	/**
-	 * Inits this {@link JSTSUtil} with the given spatial-reference ID
+	 * Inits this {@link GeometryUtil} with the given spatial-reference ID
 	 *
 	 * @param SRID
 	 */
 	@JsIgnore
 	public static void init(int SRID) {
-		JSTS_FACTORY = new JSTSFactory(new GeometryFactory(new PrecisionModel(PRECISION), SRID));
+		GeometryUtil.SRID = SRID;
 	}
 
 	/**
-	 * Inits this {@link JSTSUtil} with the given precision and spatial-reference ID
+	 * Inits this {@link GeometryUtil} with the given precision and spatial-reference ID
 	 *
 	 * @param precision
 	 * @param SRID
 	 */
 	@JsMethod
 	public static void init(double precision, int SRID) {
-		JSTS_FACTORY = new JSTSFactory(new GeometryFactory(new PrecisionModel(precision), SRID));
+		GeometryUtil.PRECISION = precision;
+		GeometryUtil.SRID = SRID;
 	}
 
 	/**
@@ -174,9 +166,9 @@ public class JSTSUtil {
 	 * @return
 	 */
 	@JsMethod
-	public static Geometry intersect(@NotNull Geometry geometry, Geometry... geoms) {
-		Geometry all = geometry.copy();
-		for (final Geometry geom : geoms) {
+	public static Geometry intersect(@NotNull Geometry first, Geometry... other) {
+		Geometry all = first.copy();
+		for (final Geometry geom : other) {
 			if (geom != null)
 				all = all.intersection(geom);
 		}
@@ -208,23 +200,23 @@ public class JSTSUtil {
 	 * 
 	 * checks if the passed geom intersects the passed point
 	 *
-	 * @param geom
-	 * @param point
+	 * @param first
+	 * @param second
 	 * @param bufferValue
 	 * @return
 	 */
 	@JsMethod
-	public static boolean intersects(@NotNull Geometry geomA, @NotNull Geometry geomB, double bufferValue) {
+	public static boolean intersects(@NotNull Geometry first, @NotNull Geometry second, double bufferValue) {
 		if (bufferValue > 0)
-			return geomA.intersects(geomB.buffer(bufferValue, 0));
+			return first.intersects(second.buffer(bufferValue, 0));
 
-		return geomA.intersects(geomB);
+		return first.intersects(second);
 	}
 
 	@JsMethod
 	public static boolean isLineSelfIntersecting(LineString line) {
 		final IsSimpleOp op = new IsSimpleOp(line);
-		return op.isSimple();
+		return !op.isSimple();
 	}
 
 	/**
@@ -244,13 +236,13 @@ public class JSTSUtil {
 	 * 
 	 * checks if geometryB is within geometryA
 	 *
-	 * @param geometryA
-	 * @param geometryB
+	 * @param first
+	 * @param second
 	 * @return
 	 */
 	@JsMethod
-	public static boolean isWithin(@NotNull Geometry geometryA, @NotNull Geometry geometryB) {
-		return geometryB.touches(geometryA);
+	public static boolean isWithin(@NotNull Geometry first, @NotNull Geometry second) {
+		return second.touches(first);
 	}
 
 	// @JsIgnore
@@ -268,9 +260,9 @@ public class JSTSUtil {
 	 * @return
 	 */
 	@JsMethod
-	public static Geometry union(@NotNull Geometry geometry, @NotNull Geometry... geoms) {
-		Geometry all = geometry.copy();
-		for (final Geometry geom : geoms) {
+	public static Geometry union(@NotNull Geometry first, @NotNull Geometry... other) {
+		Geometry all = first.copy();
+		for (final Geometry geom : other) {
 			if (geom != null)
 				all = all.union(geom);
 		}
@@ -328,10 +320,6 @@ public class JSTSUtil {
 
 	public static Point createPoint(Coordinate coord) {
 		return getJSTSFactory().createPoint(coord);
-	}
-
-	public static LinearRing createLinearRing() {
-		return getJSTSFactory().createLinearRing();
 	}
 
 	public static Polygon createPolygon(jsts.geom.Coordinate[] coordinates) {
