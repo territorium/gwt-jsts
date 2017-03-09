@@ -1,18 +1,14 @@
 /*
  * Copyright (c) 2001-2016 Territorium Online Srl. All Rights Reserved.
  *
- * This file contains Original Code and/or Modifications of Original Code as
- * defined in and that are subject to the Territorium Online License Version
- * 1.0. You may not use this file except in compliance with the License. Please
- * obtain a copy of the License at http://www.tol.info/license/ and read it
- * before using this file.
+ * This file contains Original Code and/or Modifications of Original Code as defined in and that are subject to the
+ * Territorium Online License Version 1.0. You may not use this file except in compliance with the License. Please
+ * obtain a copy of the License at http://www.tol.info/license/ and read it before using this file.
  *
- * The Original Code and all software distributed under the License are
- * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS
- * OR IMPLIED, AND TERRITORIUM ONLINE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
- * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR
- * A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT. Please see the
- * License for the specific language governing rights and limitations under the
+ * The Original Code and all software distributed under the License are distributed on an 'AS IS' basis, WITHOUT
+ * WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, AND TERRITORIUM ONLINE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
+ * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR
+ * NON-INFRINGEMENT. Please see the License for the specific language governing rights and limitations under the
  * License.
  */
 package jsts.geom;
@@ -21,8 +17,7 @@ import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsType;
 
 /**
- * The {@link Geometry} class A representation of a planar, linear vector
- * geometry.
+ * The {@link Geometry} class A representation of a planar, linear vector geometry.
  * 
  */
 @JsType(isNative = true)
@@ -50,8 +45,8 @@ public abstract class Geometry {
 
 	/**
 	 * 
-	 * Computes a buffer area around this geometry having the given width and with
-	 * a specified accuracy of approximation for circular arcs.
+	 * Computes a buffer area around this geometry having the given width and with a specified accuracy of approximation
+	 * for circular arcs.
 	 *
 	 * @param distance
 	 * @param quadrantSegments
@@ -61,9 +56,8 @@ public abstract class Geometry {
 
 	/**
 	 * 
-	 * Computes a buffer area around this geometry having the given width and with
-	 * a specified accuracy of approximation for circular arcs, and using a
-	 * specified end cap style.
+	 * Computes a buffer area around this geometry having the given width and with a specified accuracy of approximation
+	 * for circular arcs, and using a specified end cap style.
 	 *
 	 * @param distance
 	 * @param quadrantSegments
@@ -76,8 +70,7 @@ public abstract class Geometry {
 
 	/**
 	 * 
-	 * Creates and returns a full copy of this Geometry object (including all
-	 * coordinates contained by it).
+	 * Creates and returns a full copy of this Geometry object (including all coordinates contained by it).
 	 * 
 	 * @return
 	 */
@@ -91,8 +84,8 @@ public abstract class Geometry {
 
 	/**
 	 * 
-	 * Computes a Geometry representing the closure of the point-set of the points
-	 * contained in this Geometry that are not contained in the other Geometry.
+	 * Computes a Geometry representing the closure of the point-set of the points contained in this Geometry that are not
+	 * contained in the other Geometry.
 	 *
 	 * @param geom
 	 * @return
@@ -103,8 +96,7 @@ public abstract class Geometry {
 
 	/**
 	 * 
-	 * Tests whether this geometry is topologically equal to the argument
-	 * geometry.
+	 * Tests whether this geometry is topologically equal to the argument geometry.
 	 *
 	 * @param geom
 	 * @return
@@ -119,8 +111,7 @@ public abstract class Geometry {
 
 	/**
 	 * 
-	 * Tests whether this geometry is topologically equal to the argument geometry
-	 * as defined by the SFS equals predicate.
+	 * Tests whether this geometry is topologically equal to the argument geometry as defined by the SFS equals predicate.
 	 *
 	 * @param geom
 	 * @return
@@ -135,8 +126,7 @@ public abstract class Geometry {
 
 	/**
 	 * 
-	 * Returns the boundary, or an empty geometry of appropriate dimension if this
-	 * Geometry is empty.
+	 * Returns the boundary, or an empty geometry of appropriate dimension if this Geometry is empty.
 	 *
 	 * @return
 	 */
@@ -146,8 +136,7 @@ public abstract class Geometry {
 
 	/**
 	 * 
-	 * Returns a vertex of this Geometry (usually, but not necessarily, the first
-	 * one).
+	 * Returns a vertex of this Geometry (usually, but not necessarily, the first one).
 	 *
 	 * @return
 	 */
@@ -161,8 +150,7 @@ public abstract class Geometry {
 
 	/**
 	 * 
-	 * Returns an element Geometry from a GeometryCollection (or this, if the
-	 * geometry is not a collection).
+	 * Returns an element Geometry from a GeometryCollection (or this, if the geometry is not a collection).
 	 *
 	 * @param n
 	 * @return
@@ -173,8 +161,7 @@ public abstract class Geometry {
 
 	/**
 	 * 
-	 * Returns the number of Geometrys in a GeometryCollection (or 1, if the
-	 * geometry is not a collection).
+	 * Returns the number of Geometrys in a GeometryCollection (or 1, if the geometry is not a collection).
 	 *
 	 * @return
 	 */
@@ -188,8 +175,7 @@ public abstract class Geometry {
 
 	/**
 	 * 
-	 * Computes a Geometry representing the point-set which is common to both this
-	 * Geometry and the other Geometry.
+	 * Computes a Geometry representing the point-set which is common to both this Geometry and the other Geometry.
 	 *
 	 * @param geom
 	 * @return
@@ -215,9 +201,10 @@ public abstract class Geometry {
 
 	public native boolean isRectangle();
 
+	public native boolean isSimple();
+
 	/**
-	 * Tests whether this is an instance of a general GeometryCollection, rather
-	 * than a homogeneous subclass.
+	 * Tests whether this is an instance of a general GeometryCollection, rather than a homogeneous subclass.
 	 *
 	 * @return true if this is a hetereogeneous GeometryCollection
 	 */
@@ -227,8 +214,7 @@ public abstract class Geometry {
 
 	/**
 	 * 
-	 * Tests whether this Geometry is topologically valid, according to the OGC
-	 * SFS specification.
+	 * Tests whether this Geometry is topologically valid, according to the OGC SFS specification.
 	 *
 	 * @return
 	 */
@@ -240,9 +226,8 @@ public abstract class Geometry {
 
 	/**
 	 * <p>
-	 * Tests whether the elements in the DE-9IM IntersectionMatrix for the two
-	 * Geometrys match the elements in intersectionPattern. The pattern is a
-	 * 9-character string, with symbols drawn from the following set:
+	 * Tests whether the elements in the DE-9IM IntersectionMatrix for the two Geometrys match the elements in
+	 * intersectionPattern. The pattern is a 9-character string, with symbols drawn from the following set:
 	 * 
 	 * <pre>
 	 *   0 (dimension 0)
@@ -253,8 +238,7 @@ public abstract class Geometry {
 	 *   * ( matches any value)
 	 * </pre>
 	 * 
-	 * For more information on the DE-9IM, see the OpenGIS Simple Features
-	 * Specification.
+	 * For more information on the DE-9IM, see the OpenGIS Simple Features Specification.
 	 * </p>
 	 *
 	 * @param g
@@ -276,8 +260,7 @@ public abstract class Geometry {
 
 	/**
 	 * 
-	 * Computes a Geometry representing the point-set which is contained in both
-	 * this Geometry and the other Geometry.
+	 * Computes a Geometry representing the point-set which is contained in both this Geometry and the other Geometry.
 	 *
 	 * @param geom
 	 * @return
@@ -285,5 +268,4 @@ public abstract class Geometry {
 	public native Geometry union(Geometry geom);
 
 	public native boolean within(Geometry g);
-
 }

@@ -16,7 +16,6 @@ package jsts.io;
 import org.junit.Test;
 
 import jsts.GwtJSTSTestCase;
-import jsts.JSTSFactory;
 import jsts.geom.Geometry;
 import jsts.geom.GeometryUtil;
 import jsts.geom.Polygon;
@@ -53,7 +52,7 @@ public class OL3ParserTest extends GwtJSTSTestCase {
 
 		final Geometry geometry = GeometryUtil.fromWKT(GwtJSTSTestCase.POLYGON_A);
 		assertNotNull(geometry);
-		final Polygon jtsPolygon = JSTSFactory.cast(geometry);
+		final Polygon jtsPolygon = GeometryUtil.cast(geometry);
 
 		final ol.geom.Geometry olGeom = parser.write(jtsPolygon);
 		assertNotNull(olGeom);

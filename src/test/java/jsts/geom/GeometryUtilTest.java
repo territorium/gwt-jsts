@@ -76,6 +76,23 @@ public class GeometryUtilTest extends GwtJSTSTestCase {
 	}
 
 	@Test
+	public void testCreateLineString() {
+		final ArrayList<Coordinate> coordinates = createCoordinateArrayList();
+		assertTrue(coordinates.size() == 3);
+
+		final Coordinate[] coords = new Coordinate[coordinates.size()];
+		for (int i = 0; i < coords.length; i++) {
+			coords[i] = coordinates.get(i);
+		}
+		assertTrue(coords.length == 3);
+
+		final LineString line = GeometryUtil.createLineString(coords);
+
+		assertNotNull(line);
+		assertTrue(line.getCoordinates().length == 3);
+	}
+
+	@Test
 	public void testIsMultipart() {
 		final Geometry geomAB = fromWKT(
 				"POLYGON ((260 250, 390 250, 390 400, 680 400, 680 250, 810 250, 810 50, 260 50, 260 250))");

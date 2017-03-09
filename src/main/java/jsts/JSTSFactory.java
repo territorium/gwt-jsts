@@ -372,7 +372,7 @@ public class JSTSFactory {
 		if (geom instanceof Polygon || geom instanceof MultiPolygon) {
 			final Geometry mlString = geom.getBoundary();
 			final Geometry unionLines = mlString.union(splitLine);
-			final Polygonizer polygonizer = new Polygonizer();
+			final Polygonizer polygonizer = new Polygonizer(true);
 			for (int i = 0; i < unionLines.getNumGeometries(); i++) {
 				polygonizer.add(unionLines.getGeometryN(i));
 			}
@@ -420,9 +420,4 @@ public class JSTSFactory {
 		}
 		return null;
 	}
-
-	@JsIgnore
-	public static final native <T> T cast(Object o) /*-{
-		return o;
-	}-*/;
 }
