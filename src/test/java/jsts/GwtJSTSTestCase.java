@@ -114,6 +114,14 @@ public class GwtJSTSTestCase extends GWTTestCase {
 		return Array.of(createCoordinates());
 	}
 
+	protected final ArrayList<Coordinate> createCoordinateArrayList() {
+		final ArrayList<Coordinate> coords = new ArrayList<Coordinate>(3);
+		coords.add(new Coordinate(260, 250));
+		coords.add(new Coordinate(810, 250));
+		coords.add(new Coordinate(810, 50));
+		return coords;
+	}
+
 	protected final CoordinateList createCoordinateList() {
 		final CoordinateList coordList = new CoordinateList();
 		for (final Coordinate coord : createCoordinates()) {
