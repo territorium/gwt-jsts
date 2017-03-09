@@ -14,6 +14,7 @@
 package jsts.geom;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
@@ -178,7 +179,6 @@ public class GeometryUtilTest extends GwtJSTSTestCase {
 
 	@Test
 	public void testAddHole() {
-		;
 		final Polygon geomA = fromWKT(GwtJSTSTestCase.POLYGON_A);
 		final Polygon geomC = fromWKT(GwtJSTSTestCase.POLYGON_C);
 		final Polygon geomAC = fromWKT(
@@ -202,4 +202,46 @@ public class GeometryUtilTest extends GwtJSTSTestCase {
 		assertTrue(GeometryUtil.isLineSelfIntersecting(invalidLine));
 	}
 
+	@Test
+	public void testSplitPolygon() {
+		final Polygon polygon = fromWKT(SIMPLE_POLYGON_TO_SPLIT);
+		final LineString splitLine = fromWKT(SPLIT_LINE_INTERSECTING);
+		final Polygon polygonA = fromWKT(SIMPLE_SPLIT_POLYGON1);
+		final Polygon polygonB = fromWKT(SIMPLE_SPLIT_POLYGON2);
+
+		assertNotNull(polygon);
+		assertNotNull(splitLine);
+
+		final List<Geometry> geoms = GeometryUtil.split(polygon, splitLine);
+		assertTrue(geoms.size() == 2);
+
+		final Geometry geomA = geoms.get(0);
+		final Geometry geomB = geoms.get(1);
+		assertEquals(geomA, polygonA);
+		assertEquals(geomB, polygonB);
+	}
+
+	@Test
+	public void testToGeometryArray() {
+		final Geometry geomA = fromWKT(GwtJSTSTestCase.POLYGON_A);
+		final Geometry geomB = fromWKT(GwtJSTSTestCase.POLYGON_B);
+		final ArrayList<Geometry> geometries = new ArrayList<Geometry>();
+		geometries.add(geomA);
+		geometries.add(geomB);
+		final Geometry[] geomArray = GeometryUtil.toGeometryArray(geometries);
+		assertTrue(geomArray.length == 2);
+	}
+
+	public void testBuildGeometry() {
+		final Geometry geomA = fromWKT(GwtJSTSTestCase.POLYGON_A);
+		final Geometry geomB = fromWKT(GwtJSTSTestCase.POLYGON_B);
+		assertNotNull(geomA);
+		assertNotNull(geomB);
+
+		final ArrayList<Geometry> geoms = new ArrayList<Geometry>();
+		geoms.add(geomA);
+		geoms.add(geomB);
+
+		final Geometry result = GeometryUtil.buildGeometry(geoms);
+	}
 }

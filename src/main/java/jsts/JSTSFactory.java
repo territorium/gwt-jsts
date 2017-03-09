@@ -14,6 +14,7 @@
 package jsts;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -377,14 +378,19 @@ public class JSTSFactory {
 				polygonizer.add(unionLines.getGeometryN(i));
 			}
 			final ArrayList<Geometry> polygons = polygonizer.getPolygons();
-			final GeometryCollection polyGeom = geometryFactory.createGeometryCollection(polygons);
-
-			for (int i = 0; i < polyGeom.getNumGeometries(); i++) {
-				final Geometry intersectGeom = geom.intersection(polyGeom.getGeometryN(i));
-				if ((intersectGeom instanceof Polygon || intersectGeom instanceof MultiPolygon) && !intersectGeom.isEmpty()) {
-					resultGeoms.add(intersectGeom);
+			if (polygons != null) {
+				for (int i = 0; i < polygons.size(); i++) {
+					resultGeoms.add(polygons.get(i));
 				}
 			}
+			// final GeometryCollection polyGeom = createGeometryCollection(polygons);
+
+			// for (int i = 0; i < polyGeom.getNumGeometries(); i++) {
+			// final Geometry intersectGeom = geom.intersection(polyGeom.getGeometryN(i));
+			// if ((intersectGeom instanceof Polygon || intersectGeom instanceof MultiPolygon) && !intersectGeom.isEmpty()) {
+			// resultGeoms.add(intersectGeom);
+			// }
+			// }
 		} else if (geom instanceof LineString) {
 			final Geometry lineGeom = geom.difference(splitLine);
 			for (int i = 0; i < lineGeom.getNumGeometries(); i++) {
@@ -392,6 +398,17 @@ public class JSTSFactory {
 			}
 		}
 		return resultGeoms;
+	}
+
+	@JsIgnore
+	public final GeometryCollection createGeometryCollection(ArrayList<Geometry> geometries) {
+		return geometryFactory.createGeometryCollection(toGeometryArray(geometries));
+	}
+
+	@JsIgnore
+	private Geometry[] toGeometryArray(Collection<Geometry> geometries) {
+		final Geometry[] geomArray = new Geometry[geometries.size()];
+		return geometries.toArray(geomArray);
 	}
 
 	@SuppressWarnings("unchecked")

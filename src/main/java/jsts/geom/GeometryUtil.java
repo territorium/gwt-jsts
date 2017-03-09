@@ -375,23 +375,24 @@ public class GeometryUtil {
 	 * @return
 	 * @see jsts.geom.GeometryFactory#toGeometryArray(java.util.ArrayList)
 	 */
-	public static Geometry[] toGeometryArray(ArrayList<Geometry> geometries) {
-		return getGeometryFactory().toGeometryArray(geometries);
+	public static Geometry[] toGeometryArray(Collection<Geometry> geometries) {
+		final Geometry[] geomArray = new Geometry[geometries.size()];
+		return geometries.toArray(geomArray);
 	}
 
 	/**
 	 * @param geometries
 	 * @return
-	 * @see jsts.geom.GeometryFactory#buildGeometry(java.util.ArrayList)
+	 * @see jsts.geom.GeometryFactory#buildGeometry(java.util.Collection)
 	 */
-	public static Geometry buildGeometry(ArrayList<Geometry> geometries) {
+	public static Geometry buildGeometry(Collection<Geometry> geometries) {
 		return getGeometryFactory().buildGeometry(geometries);
 	}
 
 	/**
 	 * @param g
 	 * @return
-	 * @see jsts.geom.GeometryFactory#createGeometry(jsts.geom.Geometry)
+	 * @see jsts.geom.GeometryFactory#createGeometry(jsts.geom.Collection)
 	 */
 	public static Geometry createGeometry(Geometry g) {
 		return getGeometryFactory().createGeometry(g);
@@ -423,7 +424,7 @@ public class GeometryUtil {
 	 */
 	@JsIgnore
 	public static final GeometryCollection createGeometryCollection(ArrayList<Geometry> geometries) {
-		return getGeometryFactory().createGeometryCollection(geometries);
+		return getGeometryFactory().createGeometryCollection(toGeometryArray(geometries));
 	}
 
 	/**

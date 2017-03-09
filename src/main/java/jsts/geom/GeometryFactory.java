@@ -13,7 +13,7 @@
  */
 package jsts.geom;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsOverlay;
@@ -59,9 +59,9 @@ public class GeometryFactory {
 
 	public native Geometry toGeometry(Envelope envelope);
 
-	public native Geometry[] toGeometryArray(ArrayList<Geometry> geometries);
+	// public native Geometry[] toGeometryArray(Collection<Geometry> geometries);
 
-	public native Geometry buildGeometry(ArrayList<Geometry> geometries);
+	public native Geometry buildGeometry(Collection<Geometry> geometries);
 
 	public native Geometry createGeometry(Geometry g);
 
@@ -72,11 +72,6 @@ public class GeometryFactory {
 	@JsOverlay
 	public final GeometryCollection createGeometryCollection(Geometry[] geometries) {
 		return createGeometryCollection(Array.of(geometries));
-	}
-
-	@JsOverlay
-	public final GeometryCollection createGeometryCollection(ArrayList<Geometry> geometries) {
-		return createGeometryCollection(toGeometryArray(geometries));
 	}
 
 	public native LinearRing createLinearRing();

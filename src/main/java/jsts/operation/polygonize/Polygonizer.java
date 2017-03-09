@@ -63,4 +63,7 @@ public class Polygonizer {
 	 */
 	public native ArrayList<Geometry> getPolygons();
 
+	public native ArrayList<Geometry> getInvalidRingLines();
+
+	public native void setCheckRingsValid(boolean isCheckingRingsValid);
 }
