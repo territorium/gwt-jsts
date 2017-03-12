@@ -27,6 +27,7 @@ import jsinterop.annotations.JsType;
 import jsts.algorithm.CGAlgorithms;
 import jsts.geom.Coordinate;
 import jsts.geom.CoordinateSequence;
+import jsts.geom.Envelope;
 import jsts.geom.Geometry;
 import jsts.geom.GeometryCollection;
 import jsts.geom.GeometryFactory;
@@ -120,6 +121,42 @@ public class JSTSFactory {
 	@JsMethod
 	public static Coordinate createCoordinate(ol.Coordinate coord) {
 		return new Coordinate(coord.getX(), coord.getY(), coord.getZ());
+	}
+
+	/**
+	 * Creates an instance.
+	 *
+	 * @param x X-coordinate (longitude)
+	 * @param y Y-coordinate (latitude)
+	 * @return {@link Coordinate}
+	 */
+	public static Coordinate createCoordinate(double x, double y) {
+		return new Coordinate(x, y);
+	}
+
+	/**
+	 * Creates an instance.
+	 *
+	 * @param x X-coordinate (longitude)
+	 * @param y Y-coordinate (latitude)
+	 * @param z Z-coordinate
+	 * @return {@link Coordinate}
+	 */
+	public static Coordinate createCoordinate(double x, double y, double z) {
+		return new Coordinate(x, y, z);
+	}
+
+	/**
+	 * {@link #createEnvelope}
+	 *
+	 * @param x1
+	 * @param x2
+	 * @param y1
+	 * @param y2
+	 * @return
+	 */
+	public static Envelope createEnvelope(double x1, double x2, double y1, double y2) {
+		return new Envelope(x1, x2, y1, y2);
 	}
 
 	/**

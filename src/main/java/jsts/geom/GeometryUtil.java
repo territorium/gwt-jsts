@@ -29,6 +29,7 @@ import jsts.io.WKTReader;
 import jsts.io.WKTWriter;
 import jsts.operation.union.UnaryUnionOp;
 import ol.Coordinate;
+import ol.Extent;
 import tol.j2cl.elem.global.Array;
 
 /**
@@ -128,6 +129,17 @@ public class GeometryUtil {
 	@JsMethod
 	public static Geometry buffer(@NotNull Geometry geom, double distance, int quadrantSegments) {
 		return geom.buffer(distance, quadrantSegments);
+	}
+
+	/**
+	 * {@link #createEnvelope}
+	 *
+	 * @param extent
+	 * @return
+	 */
+	public static Envelope createEnvelope(Extent extent) {
+		return new Envelope(extent.getLowerLeftX(), extent.getUpperRightX(), extent.getLowerLeftY(),
+				extent.getUpperRightY());
 	}
 
 	// --------------------------------- Delegated methods --------------------------------------//
