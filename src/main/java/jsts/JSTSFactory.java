@@ -130,6 +130,7 @@ public class JSTSFactory {
 	 * @param y Y-coordinate (latitude)
 	 * @return {@link Coordinate}
 	 */
+	@JsIgnore
 	public static Coordinate createCoordinate(double x, double y) {
 		return new Coordinate(x, y);
 	}
@@ -142,6 +143,7 @@ public class JSTSFactory {
 	 * @param z Z-coordinate
 	 * @return {@link Coordinate}
 	 */
+	@JsIgnore
 	public static Coordinate createCoordinate(double x, double y, double z) {
 		return new Coordinate(x, y, z);
 	}
