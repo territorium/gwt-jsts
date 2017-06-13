@@ -41,6 +41,6 @@ public interface JsResources extends ClientBundle {
 	@Source("jsts.min.js")
 	TextResource jstsMin();
 
-	@Source("ol-4.2.0.js")
+	@Source("ol.js")
 	TextResource ol3();
 }
